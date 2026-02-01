@@ -1,0 +1,11 @@
+[project]
+name = "core"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Avinash Nishad", email = "js.avinash.nishad@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = []
+
