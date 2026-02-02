@@ -1,0 +1,61 @@
+{% extends "base/layout.html" %}
+
+{% block title %}Sign Up — ShopFlask{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <h2>Create Account</h2>
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.first_name.label }}
+        {{ form.first_name(class="form-control") }}
+        {% for err in form.first_name.errors %}
+          <span class="form-errors">{{ err }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.last_name.label }}
+        {{ form.last_name(class="form-control") }}
+        {% for err in form.last_name.errors %}
+          <span class="form-errors">{{ err }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="form-group">
+      {{ form.email.label }}
+      {{ form.email(class="form-control", placeholder="you@example.com") }}
+      {% for err in form.email.errors %}
+        <span class="form-errors">{{ err }}</span>
+      {% endfor %}
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        {{ form.password.label }}
+        {{ form.password(class="form-control", placeholder="Min 8 characters") }}
+        {% for err in form.password.errors %}
+          <span class="form-errors">{{ err }}</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.confirm_password.label }}
+        {{ form.confirm_password(class="form-control", placeholder="Re-enter password") }}
+        {% for err in form.confirm_password.errors %}
+          <span class="form-errors">{{ err }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    {{ form.submit(class="btn btn-primary btn-block") }}
+  </form>
+
+  <p style="text-align:center; margin-top:1.1rem; font-size:.82rem; color:var(--clr-text-sm);">
+    Already have an account? <a href="{{ url_for('auth.login') }}" style="color:var(--clr-accent-hi); font-weight:600;">Log in</a>
+  </p>
+</div>
+{% endblock %}

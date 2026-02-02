@@ -42,7 +42,18 @@ dependencies = [
     "pydantic-settings>=2.12.0",
     "aiosql>=15.0",
     "email-validator>=2.3.0",
+    "flask-login>=0.6.3",
 ]
+
+[tool.poe]
+executor.type = "uv"
+
+[tool.poe.tasks]
+#uv run poe offers-migrate 
+offers-migrate = "python ./services/offers/manage.py migrate" 
+offers-seed = "python ./services/offers/manage.py seed"
+offers-runserver = "python ./services/offers/manage.py runserver"
+
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"
@@ -59,8 +70,8 @@ product = "product.main:app"
 review-and-ratings = "review_and_ratings.main:app"
 inventory = "inventory.main:execute"
 recommendations = "recommendations.main:app"
-offers = "offers.main:app"
-cart = "cart.main:app"
+offers = "offers.main:execute"
+cart = "cart.main:execute"
 order = "order.main:app"
 archival = "archival.main:app"
 notification = "notification.main:app"
@@ -127,6 +138,9 @@ licenses = [
 
 debugging_tool = [
     "pysnooper",
+]
+dev = [
+    "poethepoet>=0.40.0",
 ]
 
 [tool.setuptools.packages.find]

@@ -1,0 +1,33 @@
+{% extends "base/layout.html" %}
+
+{% block title %}My Orders — ShopFlask{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>My Orders</h1>
+  <p>Track and review your past purchases.</p>
+</div>
+
+{% if orders %}
+  {% for order in orders %}
+    <a href="{{ url_for('orders.order_detail', order_id=order.id) }}" class="history-item">
+      <div class="history-item__left">
+        <h4>Order #{{ order.id }}</h4>
+        <p>{{ order.created_at.strftime('%B %d, %Y') }} · {{ order.items|length }} item{{ 's' if order.items|length != 1 }}</p>
+      </div>
+      <div class="history-item__right">
+        <span class="history-item__price">{{ order.total_display }}</span>
+        <span class="order-status-badge status-{{ order.status }}">{{ order.status|capitalize }}</span>
+      </div>
+    </a>
+  {% endfor %}
+{% else %}
+  <div style="text-align:center; padding:3.5rem 0; color:var(--clr-text-sm);">
+    <p style="font-size:3rem; margin-bottom:.6rem;">📦</p>
+    <p>You haven't placed any orders yet.</p>
+    <a href="{{ url_for('products.listing') }}" class="btn btn-primary" style="margin-top:1rem;">Start Shopping</a>
+  </div>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "base/layout.html" %}
+
+{% block title %}
+  {% if selected_category %}{{ selected_category.name }}{% else %}Products{% endif %} — ShopFlask
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>
+    {% if selected_category %}
+      {{ selected_category.name }}
+    {% elif query_text %}
+      Search: "{{ query_text }}"
+    {% else %}
+      All Products
+    {% endif %}
+  </h1>
+  {% if selected_category and selected_category.description %}
+    <p>{{ selected_category.description }}</p>
+  {% endif %}
+</div>
+
+<!-- ─── Category Pills ──────────────────────────────────────── -->
+<div style="display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.4rem;">
+  <a href="{{ url_for('products.listing') }}"
+     class="btn btn-sm {{ '' if not selected_category else 'btn-outline' }}"
+     style="{% if not selected_category %}background:var(--clr-accent);color:#fff;{% endif %}">
+    All
+  </a>
+  {% for cat in categories %}
+    <a href="{{ url_for('products.listing', category=cat.slug) }}"
+       class="btn btn-sm {{ '' if selected_category and selected_category.id == cat.id else 'btn-outline' }}"
+       style="{% if selected_category and selected_category.id == cat.id %}background:var(--clr-accent);color:#fff;{% endif %}">
+      {{ cat.name }}
+    </a>
+  {% endfor %}
+</div>
+
+<!-- ─── Filters ──────────────────────────────────────────────── -->
+<div class="filters">
+  <form method="GET" class="search-wrap">
+    <input type="text" name="q" value="{{ query_text }}" placeholder="Search products…" />
+    {% if selected_category %}
+      <input type="hidden" name="category" value="{{ selected_category.slug }}" />
+    {% endif %}
+    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+    {% if query_text %}
+      <a href="{{ url_for('products.listing', category=selected_category.slug if selected_category else '') }}" class="btn btn-outline btn-sm">Clear</a>
+    {% endif %}
+  </form>
+
+  <select onchange="this.form.submit()" style="margin-left:auto;">
+    <form>  <!-- Wrap for quick sort — JS fallback below -->
+    </form>
+  </select>
+</div>
+
+<!-- Sort via quick links -->
+<div style="display:flex; gap:.5rem; align-items:center; margin-bottom:1.2rem; font-size:.8rem; color:var(--clr-text-sm);">
+  <span>Sort by:</span>
+  {% for label, val in [('Newest','newest'),('Price: Low→High','price_asc'),('Price: High→Low','price_desc'),('Name','name')] %}
+    <a href="{{ url_for('products.listing', category=selected_category.slug if selected_category else '', q=query_text, sort=val) }}"
+       style="{% if sort == val %}color:var(--clr-accent-hi);font-weight:600;{% endif %}">{{ label }}</a>
+  {% endfor %}
+</div>
+
+<!-- ─── Product Grid ─────────────────────────────────────────── -->
+{% if products.items %}
+<div class="product-grid">
+  {% for product in products.items %}
+    <a href="{{ url_for('products.detail', slug=product.slug) }}" class="card">
+      <div class="card__img">
+        {% if product.image_url %}
+          <img src="{{ product.image_url }}" alt="{{ product.name }}" />
+        {% else %}
+          <span class="card__img-placeholder">🛍️</span>
+        {% endif %}
+      </div>
+      <div class="card__body">
+        <span class="card__category">{{ product.category.name }}</span>
+        <h3 class="card__title">{{ product.name }}</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+          <span class="card__price">{{ product.price_display }}</span>
+          {% if not product.in_stock %}
+            <span class="card__stock-off">Out of stock</span>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+
+<!-- ─── Pagination ──────────────────────────────────────────── -->
+{% if products.pages > 1 %}
+<nav class="pagination">
+  <a href="{{ url_for('products.listing', category=selected_category.slug if selected_category else '', q=query_text, sort=sort, page=products.prev_num) if products.has_prev else '#' }}"
+     class="{{ '' if products.has_prev else 'disabled' }}">« Prev</a>
+
+  {% for p in products.iter_pages(left_edge=1, left_current=1, right_current=1, right_edge=1) %}
+    {% if p %}
+      <a href="{{ url_for('products.listing', category=selected_category.slug if selected_category else '', q=query_text, sort=sort, page=p) }}"
+         class="{{ 'current' if p == products.page else '' }}">{{ p }}</a>
+    {% else %}
+      <span>…</span>
+    {% endif %}
+  {% endfor %}
+
+  <a href="{{ url_for('products.listing', category=selected_category.slug if selected_category else '', q=query_text, sort=sort, page=products.next_num) if products.has_next else '#' }}"
+     class="{{ '' if products.has_next else 'disabled' }}">Next »</a>
+</nav>
+{% endif %}
+
+{% else %}
+  <p style="text-align:center; color:var(--clr-text-sm); padding:3rem 0;">
+    No products found{% if query_text %} matching "{{ query_text }}"{% endif %}.
+  </p>
+{% endif %}
+
+{% endblock %}

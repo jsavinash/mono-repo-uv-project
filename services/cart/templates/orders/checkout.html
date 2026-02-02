@@ -1,0 +1,96 @@
+{% extends "base/layout.html" %}
+
+{% block title %}Checkout — ShopFlask{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Checkout</h1>
+  <p>Fill in your shipping details to place your order.</p>
+</div>
+
+<div class="cart-layout">
+
+  <!-- Shipping Form -->
+  <div>
+    <div style="background:var(--clr-surface); border-radius:var(--radius-lg); box-shadow:var(--shadow); padding:1.8rem;">
+      <h3 style="margin-bottom:1.2rem;">Shipping Information</h3>
+      <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+          {{ form.shipping_name.label }}
+          {{ form.shipping_name(class="form-control") }}
+          {% for err in form.shipping_name.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.shipping_email.label }}
+          {{ form.shipping_email(class="form-control") }}
+          {% for err in form.shipping_email.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+        </div>
+
+        <div class="form-group">
+          {{ form.shipping_address.label }}
+          {{ form.shipping_address(class="form-control", placeholder="123 Main St, Apt 4B") }}
+          {% for err in form.shipping_address.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            {{ form.shipping_city.label }}
+            {{ form.shipping_city(class="form-control") }}
+            {% for err in form.shipping_city.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.shipping_state.label }}
+            {{ form.shipping_state(class="form-control") }}
+            {% for err in form.shipping_state.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            {{ form.shipping_zip.label }}
+            {{ form.shipping_zip(class="form-control") }}
+            {% for err in form.shipping_zip.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+          </div>
+          <div class="form-group">
+            {{ form.shipping_country.label }}
+            {{ form.shipping_country(class="form-control") }}
+            {% for err in form.shipping_country.errors %}<span class="form-errors">{{ err }}</span>{% endfor %}
+          </div>
+        </div>
+
+        <hr class="form-divider" />
+
+        <p style="font-size:.78rem; color:var(--clr-text-sm); margin-bottom:1rem;">
+          Payment is simulated for this demo. In production, Stripe integration would be wired here.
+        </p>
+
+        {{ form.submit(class="btn btn-accent btn-block") }}
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Summary -->
+  <div class="cart-summary">
+    <h3>Order Summary</h3>
+    {% for item in cart.items %}
+      <div class="cart-summary-row">
+        <span>{{ item.product.name }} × {{ item.quantity }}</span>
+        <span>${{ "%.2f"|format(item.subtotal) }}</span>
+      </div>
+    {% endfor %}
+    <div class="cart-summary-row" style="border-top:1px solid var(--clr-border); margin-top:.6rem; padding-top:.6rem;">
+      <span>Shipping</span>
+      <span style="color:var(--clr-success); font-weight:600;">Free</span>
+    </div>
+    <div class="cart-summary-row cart-summary-row--total">
+      <span>Total</span>
+      <span>${{ "%.2f"|format(cart.total) }}</span>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

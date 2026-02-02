@@ -1,0 +1,63 @@
+{% extends "base/layout.html" %}
+
+{% block title %}ShopFlask — Home{% endblock %}
+
+{% block content %}
+
+<!-- ─── Hero ──────────────────────────────────────────────── -->
+<div style="text-align:center; padding: 3.5rem 0 2rem;">
+  <h1 style="font-size:2.6rem; font-weight:700; letter-spacing:-.5px;">
+    Discover something <span style="color:var(--clr-accent-hi);">amazing</span>
+  </h1>
+  <p style="color:var(--clr-text-sm); max-width:520px; margin:0.6rem auto 0; font-size:.95rem;">
+    Curated products at prices you'll love. Browse categories or dive straight into our favourites.
+  </p>
+</div>
+
+<!-- ─── Category Pills ────────────────────────────────────── -->
+{% if categories %}
+<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:.55rem; margin-bottom:2.2rem;">
+  {% for cat in categories %}
+    <a href="{{ url_for('products.listing', category=cat.slug) }}"
+       class="btn btn-outline btn-sm">{{ cat.name }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- ─── Featured Products ─────────────────────────────────── -->
+<h2 style="font-size:1.25rem; margin-bottom:1rem;">Featured Products</h2>
+
+{% if featured %}
+<div class="product-grid">
+  {% for product in featured %}
+    <a href="{{ url_for('products.detail', slug=product.slug) }}" class="card">
+      <div class="card__img">
+        {% if product.image_url %}
+          <img src="{{ product.image_url }}" alt="{{ product.name }}" />
+        {% else %}
+          <span class="card__img-placeholder">🛍️</span>
+        {% endif %}
+      </div>
+      <div class="card__body">
+        <span class="card__category">{{ product.category.name }}</span>
+        <h3 class="card__title">{{ product.name }}</h3>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:.5rem;">
+          <span class="card__price">{{ product.price_display }}</span>
+          {% if not product.in_stock %}
+            <span class="card__stock-off">Out of stock</span>
+          {% endif %}
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+{% else %}
+  <p style="color:var(--clr-text-sm); text-align:center; padding:2rem 0;">No products available yet.</p>
+{% endif %}
+
+<!-- ─── CTA ────────────────────────────────────────────────── -->
+<div style="text-align:center; margin-top:2.8rem;">
+  <a href="{{ url_for('products.listing') }}" class="btn btn-primary">View All Products →</a>
+</div>
+
+{% endblock %}

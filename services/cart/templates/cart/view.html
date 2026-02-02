@@ -1,0 +1,93 @@
+{% extends "base/layout.html" %}
+
+{% block title %}Your Cart — ShopFlask{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Your Cart</h1>
+  <p>{{ cart.item_count }} item{{ 's' if cart.item_count != 1 }} in your cart</p>
+</div>
+
+{% if cart.items %}
+
+<div class="cart-layout">
+
+  <!-- Item list -->
+  <div>
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Subtotal</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+        <tr>
+          <td>
+            <a href="{{ url_for('products.detail', slug=item.product.slug) }}" class="cart-item-name">
+              {{ item.product.name }}
+            </a>
+            <span style="font-size:.76rem; color:var(--clr-text-sm);">{{ item.product.category.name }}</span>
+          </td>
+          <td>{{ item.product.price_display }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('cart.update_item', item_id=item.id) }}" class="cart-qty">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <button type="button" class="cart-qty-btn btn btn-outline btn-sm" data-delta="-1">−</button>
+              <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" />
+              <button type="button" class="cart-qty-btn btn btn-outline btn-sm" data-delta="1">+</button>
+              <button type="submit" class="btn btn-outline btn-sm">Update</button>
+            </form>
+          </td>
+          <td style="font-weight:600;">${{ "%.2f"|format(item.subtotal) }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('cart.remove_item', item_id=item.id) }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Summary sidebar -->
+  <div class="cart-summary">
+    <h3>Order Summary</h3>
+    <div class="cart-summary-row">
+      <span>Subtotal ({{ cart.item_count }} items)</span>
+      <span>${{ "%.2f"|format(cart.total) }}</span>
+    </div>
+    <div class="cart-summary-row">
+      <span>Shipping</span>
+      <span style="color:var(--clr-success); font-weight:600;">Free</span>
+    </div>
+    <div class="cart-summary-row">
+      <span>Tax</span>
+      <span>$0.00</span>
+    </div>
+    <div class="cart-summary-row cart-summary-row--total">
+      <span>Total</span>
+      <span>${{ "%.2f"|format(cart.total) }}</span>
+    </div>
+    <a href="{{ url_for('orders.checkout') }}" class="btn btn-accent btn-block" style="margin-top:1.2rem;">
+      Proceed to Checkout →
+    </a>
+  </div>
+</div>
+
+{% else %}
+  <div style="text-align:center; padding:3.5rem 0; color:var(--clr-text-sm);">
+    <p style="font-size:3rem; margin-bottom:.6rem;">🛒</p>
+    <p>Your cart is empty.</p>
+    <a href="{{ url_for('products.listing') }}" class="btn btn-primary" style="margin-top:1rem;">Browse Products</a>
+  </div>
+{% endif %}
+
+{% endblock %}

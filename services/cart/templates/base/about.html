@@ -1,0 +1,41 @@
+{% extends "base/layout.html" %}
+
+{% block title %}About — ShopFlask{% endblock %}
+
+{% block content %}
+<div class="about-content">
+  <div class="page-header" style="text-align:center;">
+    <h1>About ShopFlask</h1>
+    <p>Built with Python, Flask & a little ❤️</p>
+  </div>
+
+  <p>
+    ShopFlask is a fully-featured ecommerce platform built as a learning project using
+    <strong>Flask</strong>, <strong>SQLAlchemy</strong>, and <strong>uv</strong> for dependency management.
+    It demonstrates a real-world application structure with authentication, shopping cart, checkout,
+    order management, and Stripe payment integration hooks.
+  </p>
+
+  <h2>What's Included</h2>
+  <p>
+    User registration and login with secure password hashing. A product catalog with categories,
+    search, sorting, and pagination. A fully functional shopping cart with quantity controls.
+    A checkout flow with shipping address form. Order history and detail pages. A clean, responsive
+    UI built with vanilla CSS — no external UI frameworks.
+  </p>
+
+  <h2>Tech Stack</h2>
+  <p>
+    <strong>Python 3.12+</strong> — <strong>Flask 3.x</strong> — <strong>SQLAlchemy 2.x</strong> —
+    <strong>Flask-Login</strong> — <strong>Flask-WTF</strong> — <strong>uv</strong> (package manager) —
+    <strong>Stripe</strong> (payment integration stub).
+  </p>
+
+  <h2>Getting Started</h2>
+  <p>
+    Clone the repo, run <code>uv sync</code> to install dependencies, copy <code>.env.example</code>
+    to <code>.env</code>, then run <code>uv run flask run</code>. The database is created and seeded
+    automatically on first launch.
+  </p>
+</div>
+{% endblock %}
