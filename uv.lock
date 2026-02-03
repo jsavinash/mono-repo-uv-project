@@ -4,10 +4,12 @@ requires-python = ">=3.14"
 
 [manifest]
 members = [
+    "algorithms",
     "archival",
     "cart",
     "cli",
     "core",
+    "data-structure",
     "inventory",
     "item",
     "notification",
@@ -62,6 +64,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/79/41/ab8f624929847b49f
 wheels = [
     { url = "https://files.pythonhosted.org/packages/45/8e/d79281f323e7469b060f15bd229e48d7cdd219559e67e71c013720a88340/alembic-1.18.3-py3-none-any.whl", hash = "sha256:12a0359bfc068a4ecbb9b3b02cf77856033abfdb59e4a5aca08b7eacd7b74ddd", size = 262282, upload-time = "2026-01-29T20:24:17.488Z" },
 ]
+
+[[package]]
+name = "algorithms"
+version = "0.1.0"
+source = { editable = "packages/algorithms" }
 
 [[package]]
 name = "amqp"
@@ -634,6 +641,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/0a/21/f7433d18fe6d5845329cbdc597e30caf983229c7a245bcf54afecc555938/cryptography-46.0.4-cp38-abi3-win32.whl", hash = "sha256:0563655cb3c6d05fb2afe693340bc050c30f9f34e15763361cf08e94749401fc", size = 3009779, upload-time = "2026-01-28T00:24:20.198Z" },
     { url = "https://files.pythonhosted.org/packages/3a/6a/bd2e7caa2facffedf172a45c1a02e551e6d7d4828658c9a245516a598d94/cryptography-46.0.4-cp38-abi3-win_amd64.whl", hash = "sha256:fa0900b9ef9c49728887d1576fd8d9e7e3ea872fa9b25ef9b64888adc434e976", size = 3466633, upload-time = "2026-01-28T00:24:21.851Z" },
 ]
+
+[[package]]
+name = "data-structure"
+version = "0.1.0"
+source = { editable = "packages/data_structure" }
 
 [[package]]
 name = "dependency-groups"
