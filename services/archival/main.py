@@ -6,7 +6,7 @@ app = Typer(add_completion=False)
 
 
 @app.command()
-def main():
+def app():
     print("Hello from archival!")
     printAnything()
     addTwoNumbers(1, 2)

@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
-
+from typing import Protocol, runtime_checkable, override, ClassVar
 
 class IndexOutOfBoundsError(IndexError):
     """Exception raised for custom index out of bounds errors. """
-    def __init__(self, index, length, message="Index out of bounds"):
+    @override
+    def __init__(self, index: int, length: int, message:str="Index out of bounds") -> None:
         self.index = index
         self.length = length
         self.message = (
@@ -11,7 +12,8 @@ class IndexOutOfBoundsError(IndexError):
         )
         super().__init__(self.message)  # Pass the message to the base class constructor
 
-    def __str__(self):
+    @override
+    def __str__(self) -> str:
         return self.message
 
 
@@ -22,31 +24,37 @@ class IFixedArray(ABC):
         self._capacity = capacity
 
     @property
-    def capacity(self):
-        return
+    @abstractmethod
+    def capacity(self) -> int:
+        pass
 
     @capacity.setter
-    def capacity(self, val):
+    @abstractmethod
+    def capacity(self, val: int) -> None:
         pass
 
     @property
-    def size(self):
-        return
+    @abstractmethod
+    def size(self) -> int:
+        pass
 
     @size.setter
-    def size(self, val):
+    @abstractmethod
+    def size(self, val: int) -> None:
         pass
 
     @property
-    def arr(self):
-        return
+    @abstractmethod
+    def arr(self) -> list[str]:
+        pass
 
     @arr.setter
-    def arr(self, val):
+    @abstractmethod
+    def arr(self, val: list[str]) -> None:
         pass
 
     @abstractmethod  # Decorator to define an abstract method
-    def traverse(self):
+    def traverse(self) -> None:
         pass
 
     def insert_at_beginning(self, data: str) -> None:
@@ -79,43 +87,48 @@ class FixedArray(IFixedArray):
         self._capacity = capacity
         self._size = 0
         self._arr = [None] * capacity
-
+    
     @property
-    def capacity(self):
+    @override
+    def capacity(self) -> int:
         return self._capacity
 
     @capacity.setter
-    def capacity(self, val):
+    @override
+    def capacity(self, val: int) -> None:
         self._capacity = val
 
     @property
-    def arr(self):
-        return self._arr
-
-    @arr.setter
-    def arr(self, val):
-        self._arr = val
-
-    @property
-    def size(self):
+    def size(self) -> int:
         return self._size
 
     @size.setter
-    def size(self, val):
+    def size(self, val: int) -> None:
         self._size = val
+    
+    @property
+    def arr(self) -> list[None]:
+        return self._arr
 
+    @arr.setter
+    def arr(self, val: list[None]) -> None:
+        self._arr = val
+    
+    @override
     def traverse(self) -> None:
         print(self.arr)
-
-    def insert_at_beginning(self, data: int) -> None:
+    
+    @override
+    def insert_at_beginning(self, data: str) -> None:
         curr = data
         for x in range(self.size):
             temp = self.arr[x]
             self.arr[x] = curr
             curr = temp
         self.size += 1
-
-    def insert_at_end(self, data: int) -> None:
+    
+    @override
+    def insert_at_end(self, data: str) -> None:
         self.arr[self.size] = data
         self.size += 1
         
