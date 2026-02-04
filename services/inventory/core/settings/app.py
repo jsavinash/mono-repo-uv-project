@@ -2,11 +2,10 @@ import logging
 import sys
 from typing import Any, Dict, List, Tuple
 
-from loguru import logger
-from pydantic import PostgresDsn, SecretStr
-
 from item.src.core.logging import InterceptHandler
 from item.src.core.settings.base import BaseAppSettings
+from loguru import logger
+from pydantic import PostgresDsn, SecretStr
 
 
 class AppSettings(BaseAppSettings):

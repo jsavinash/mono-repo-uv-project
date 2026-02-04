@@ -35,7 +35,9 @@ class Config:
     STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 
     # ─── Uploads ────────────────────────────────────────────
-    UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", str(BASE_DIR / "app" / "static" / "images" / "uploads"))
+    UPLOAD_FOLDER = os.getenv(
+        "UPLOAD_FOLDER", str(BASE_DIR / "app" / "static" / "images" / "uploads")
+    )
     MAX_CONTENT_LENGTH = int(os.getenv("MAX_CONTENT_LENGTH", 16 * 1024 * 1024))  # 16 MB
     ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 

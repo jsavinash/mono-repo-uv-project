@@ -22,8 +22,12 @@ class User(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # ─── Relationships ──────────────────────────────────────
-    cart = db.relationship("Cart", back_populates="user", uselist=False, cascade="all, delete-orphan")
-    orders = db.relationship("Order", back_populates="user", order_by="Order.created_at.desc()")
+    cart = db.relationship(
+        "Cart", back_populates="user", uselist=False, cascade="all, delete-orphan"
+    )
+    orders = db.relationship(
+        "Order", back_populates="user", order_by="Order.created_at.desc()"
+    )
 
     # ─── Helpers ────────────────────────────────────────────
     def set_password(self, password: str) -> None:

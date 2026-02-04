@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Protocol, runtime_checkable, override
+from typing import Protocol, override, runtime_checkable
 
 
 # 1. THE PROTOCOL: Defines what behavior is expected (Structural)

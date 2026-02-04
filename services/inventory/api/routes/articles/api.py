@@ -1,5 +1,4 @@
 from fastapi import APIRouter
-
 from item.src.api.routes.articles import articles_common, articles_resource
 
 router = APIRouter()

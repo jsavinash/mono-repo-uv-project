@@ -1,8 +1,6 @@
 from typing import Optional
 
 from fastapi import APIRouter, Body, Depends, Response
-from starlette import status
-
 from item.src.api.dependencies.articles import get_article_by_slug_from_path
 from item.src.api.dependencies.authentication import get_current_user_authorizer
 from item.src.api.dependencies.comments import (
@@ -19,6 +17,7 @@ from item.src.models.schemas.comments import (
     CommentInResponse,
     ListOfCommentsInResponse,
 )
+from starlette import status
 
 router = APIRouter()
 

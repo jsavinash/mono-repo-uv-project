@@ -13,7 +13,12 @@ main_bp = Blueprint("main", __name__)
 def index():
     """Homepage — shows featured (newest) products and all categories."""
     categories = Category.query.all()
-    featured = Product.query.filter_by(is_active=True).order_by(Product.created_at.desc()).limit(8).all()
+    featured = (
+        Product.query.filter_by(is_active=True)
+        .order_by(Product.created_at.desc())
+        .limit(8)
+        .all()
+    )
     return render_template("base/index.html", categories=categories, featured=featured)
 
 

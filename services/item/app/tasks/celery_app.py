@@ -1,13 +1,15 @@
 """
 Celery Configuration
 """
+
 from celery import Celery
+
 from item.app.core.config.settings import settings
 
 celery_app = Celery(
     "ecommerce",
     broker=settings.CELERY_BROKER_URL,
-    backend=settings.CELERY_RESULT_BACKEND
+    backend=settings.CELERY_RESULT_BACKEND,
 )
 
 celery_app.conf.update(

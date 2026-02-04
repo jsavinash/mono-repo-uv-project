@@ -2,7 +2,7 @@
 routes/products.py ─ Product listing, detail, and search.
 """
 
-from flask import Blueprint, abort, render_template, request
+from flask import Blueprint, render_template, request
 
 from cart.models.product import Category, Product
 
@@ -31,7 +31,9 @@ def listing():
     # ─── Text search ────────────────────────────────────────
     if query_text:
         pattern = f"%{query_text}%"
-        query = query.filter(Product.name.ilike(pattern) | Product.description.ilike(pattern))
+        query = query.filter(
+            Product.name.ilike(pattern) | Product.description.ilike(pattern)
+        )
 
     # ─── Sort ───────────────────────────────────────────────
     sort = request.args.get("sort", "newest")

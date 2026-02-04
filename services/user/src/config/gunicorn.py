@@ -5,7 +5,6 @@ import os
 
 from setuptools._distutils.util import strtobool
 
-
 bind = f"0.0.0.0:{os.getenv('PORT', '8000')}"
 accesslog = "-"
 access_log_format = (

@@ -40,11 +40,15 @@ class Order(db.Model):
 
     # ─── Timestamps ─────────────────────────────────────────
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    updated_at = db.Column(
+        db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
     # ─── Relationships ──────────────────────────────────────
     user = db.relationship("User", back_populates="orders")
-    items = db.relationship("OrderItem", back_populates="order", cascade="all, delete-orphan")
+    items = db.relationship(
+        "OrderItem", back_populates="order", cascade="all, delete-orphan"
+    )
 
     @property
     def total_display(self) -> str:
@@ -61,7 +65,9 @@ class OrderItem(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
     quantity = db.Column(db.Integer, nullable=False, default=1)
-    unit_price = db.Column(db.Float, nullable=False)  # Snapshot of price at time of purchase
+    unit_price = db.Column(
+        db.Float, nullable=False
+    )  # Snapshot of price at time of purchase
 
     # ─── Relationships ──────────────────────────────────────
     order = db.relationship("Order", back_populates="items")

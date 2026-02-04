@@ -3,9 +3,6 @@ from typing import Callable, Optional
 
 from fastapi import Depends, HTTPException, Security
 from fastapi.security import APIKeyHeader
-from starlette import requests, status
-from starlette.exceptions import HTTPException as StarletteHTTPException
-
 from item.src.api.dependencies.database import get_repository
 from item.src.core.config import get_app_settings
 from item.src.core.settings.app import AppSettings
@@ -14,6 +11,8 @@ from item.src.db.repositories.users import UsersRepository
 from item.src.models.domain.users import User
 from item.src.resources import strings
 from item.src.services import jwt
+from starlette import requests, status
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 HEADER_KEY = "Authorization"
 

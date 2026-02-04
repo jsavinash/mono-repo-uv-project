@@ -98,4 +98,5 @@ def order_detail(order_id: int):
 # ─── Helper ─────────────────────────────────────────────────────
 def current_app_config(key: str):
     from flask import current_app
+
     return current_app.config.get(key, "")

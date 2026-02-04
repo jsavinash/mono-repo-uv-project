@@ -1,4 +1,5 @@
-from flask import Blueprint, make_response, jsonify, request
+from flask import Blueprint, jsonify, make_response, request
+
 from user.src.extensions import db
 from user.src.models.user import User
 

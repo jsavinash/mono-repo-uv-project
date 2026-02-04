@@ -1,8 +1,6 @@
 from typing import Optional
 
 from fastapi import Depends, HTTPException, Path, Query
-from starlette import status
-
 from item.src.api.dependencies.authentication import get_current_user_authorizer
 from item.src.api.dependencies.database import get_repository
 from item.src.db.errors import EntityDoesNotExist
@@ -16,6 +14,7 @@ from item.src.models.schemas.articles import (
 )
 from item.src.resources import strings
 from item.src.services.articles import check_user_can_modify_article
+from starlette import status
 
 
 def get_articles_filters(

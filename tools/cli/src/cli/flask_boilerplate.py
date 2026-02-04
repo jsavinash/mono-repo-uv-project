@@ -2,12 +2,11 @@
 
 import os
 from pathlib import Path
-
+import re
 from typing import Annotated
 
 from rich.console import Console
-from typer import Argument, Typer, BadParameter
-import re
+from typer import Argument, BadParameter, Typer
 
 app = Typer(add_completion=False)
 

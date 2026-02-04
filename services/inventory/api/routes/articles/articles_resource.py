@@ -1,8 +1,6 @@
 from typing import Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Response
-from starlette import status
-
 from item.src.api.dependencies.articles import (
     check_article_modification_permissions,
     get_article_by_slug_from_path,
@@ -23,6 +21,7 @@ from item.src.models.schemas.articles import (
 )
 from item.src.resources import strings
 from item.src.services.articles import check_article_exists, get_slug_for_article
+from starlette import status
 
 router = APIRouter()
 

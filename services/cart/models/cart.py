@@ -9,11 +9,15 @@ class Cart(db.Model):
     __tablename__ = "carts"
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
+    user_id = db.Column(
+        db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False
+    )
 
     # ─── Relationships ──────────────────────────────────────
     user = db.relationship("User", back_populates="cart")
-    items = db.relationship("CartItem", back_populates="cart", cascade="all, delete-orphan")
+    items = db.relationship(
+        "CartItem", back_populates="cart", cascade="all, delete-orphan"
+    )
 
     # ─── Helpers ────────────────────────────────────────────
     @property

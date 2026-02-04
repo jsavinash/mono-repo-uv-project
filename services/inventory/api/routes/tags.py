@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-
 from item.src.api.dependencies.database import get_repository
 from item.src.db.repositories.tags import TagsRepository
 from item.src.models.schemas.tags import TagsInList

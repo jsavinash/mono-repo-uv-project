@@ -2,9 +2,11 @@
 Database Configuration
 SQLAlchemy setup with PostgreSQL
 """
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+
 from item.app.core.config.settings import settings
 
 # Create SQLAlchemy engine
@@ -13,7 +15,7 @@ engine = create_engine(
     pool_pre_ping=True,
     pool_size=10,
     max_overflow=20,
-    echo=settings.DEBUG
+    echo=settings.DEBUG,
 )
 
 # Create SessionLocal class

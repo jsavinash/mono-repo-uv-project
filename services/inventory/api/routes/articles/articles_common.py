@@ -1,6 +1,4 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
-from starlette import status
-
 from item.src.api.dependencies.articles import get_article_by_slug_from_path
 from item.src.api.dependencies.authentication import get_current_user_authorizer
 from item.src.api.dependencies.database import get_repository
@@ -15,6 +13,7 @@ from item.src.models.schemas.articles import (
     ListOfArticlesInResponse,
 )
 from item.src.resources import strings
+from starlette import status
 
 router = APIRouter()
 

@@ -1,8 +1,6 @@
 from typing import Optional
 
 from fastapi import Depends, HTTPException, Path
-from starlette import status
-
 from item.src.api.dependencies import articles, authentication, database
 from item.src.db.errors import EntityDoesNotExist
 from item.src.db.repositories.comments import CommentsRepository
@@ -11,6 +9,7 @@ from item.src.models.domain.comments import Comment
 from item.src.models.domain.users import User
 from item.src.resources import strings
 from item.src.services.comments import check_user_can_modify_comment
+from starlette import status
 
 
 async def get_comment_by_id_from_path(

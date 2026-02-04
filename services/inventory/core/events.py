@@ -1,10 +1,9 @@
 from typing import Callable
 
 from fastapi import FastAPI
-from loguru import logger
-
 from item.src.core.settings.app import AppSettings
 from item.src.db.events import close_db_connection, connect_to_db
+from loguru import logger
 
 
 def create_start_app_handler(

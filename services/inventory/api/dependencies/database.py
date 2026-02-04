@@ -3,9 +3,8 @@ from typing import AsyncGenerator, Callable, Type
 from asyncpg.connection import Connection
 from asyncpg.pool import Pool
 from fastapi import Depends
-from starlette.requests import Request
-
 from item.src.db.repositories.base import BaseRepository
+from starlette.requests import Request
 
 
 def _get_db_pool(request: Request) -> Pool:

@@ -68,9 +68,10 @@ def lint(s: Session, command: list[str]) -> None:
 def lint_fix(s: Session) -> None:
     s.run("ruff", "check", ".", "--extend-fixable", "F401", "--fix")
 
+
 @session(venv_backend="none")
 def type_check(s: Session) -> None:
-    #s.run("mypy", "packages/concepts", "noxfile.py")
+    # s.run("mypy", "packages/concepts", "noxfile.py")
     s.run("mypy", "packages")
 
 

@@ -1,6 +1,5 @@
-from typer.testing import CliRunner
-
 from core.print import printAnything
+from typer.testing import CliRunner
 
 
 def test_main() -> None:

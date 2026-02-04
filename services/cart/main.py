@@ -4,12 +4,14 @@ Call  create_app()  to get a fully-wired Flask instance.
 """
 
 import os
-from typer import Typer
+
 from flask import Flask
+from typer import Typer
 
 from cart.config import config_map
 from cart.extensions import csrf
-#from cart.extensions import csrf, db, login_manager, mail, migrate
+
+# from cart.extensions import csrf, db, login_manager, mail, migrate
 
 
 def create_app(config_name: str | None = None) -> Flask:
@@ -26,9 +28,9 @@ def create_app(config_name: str | None = None) -> Flask:
     # mail.init_app(app)
     csrf.init_app(app)
 
-    #login_manager.login_view = "auth.login"
-    #login_manager.login_message = "Please log in to access this page."
-    #login_manager.login_message_category = "warning"
+    # login_manager.login_view = "auth.login"
+    # login_manager.login_message = "Please log in to access this page."
+    # login_manager.login_message_category = "warning"
 
     # ─── User loader (flask-login) ──────────────────────────
     # @login_manager.user_loader
@@ -59,13 +61,16 @@ def create_app(config_name: str | None = None) -> Flask:
 
     return app
 
+
 execute = Typer(add_completion=False)
+
+
 @execute.command()
 def main() -> None:
     """Run Flask App."""
     app = create_app()
     app.run(debug=True)
-    
+
 
 if __name__ == "__main__":
     execute()

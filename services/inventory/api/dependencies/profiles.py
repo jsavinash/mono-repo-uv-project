@@ -1,8 +1,6 @@
 from typing import Optional
 
 from fastapi import Depends, HTTPException, Path
-from starlette.status import HTTP_404_NOT_FOUND
-
 from item.src.api.dependencies.authentication import get_current_user_authorizer
 from item.src.api.dependencies.database import get_repository
 from item.src.db.errors import EntityDoesNotExist
@@ -10,6 +8,7 @@ from item.src.db.repositories.profiles import ProfilesRepository
 from item.src.models.domain.profiles import Profile
 from item.src.models.domain.users import User
 from item.src.resources import strings
+from starlette.status import HTTP_404_NOT_FOUND
 
 
 async def get_profile_by_username_from_path(

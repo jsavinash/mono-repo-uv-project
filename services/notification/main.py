@@ -1,6 +1,6 @@
-from typer import Typer
 from core.print import printAnything
 from shared.numberUtils import addTwoNumbers
+from typer import Typer
 
 app = Typer(add_completion=False)
 

@@ -34,7 +34,12 @@ class CheckoutForm(FlaskForm):
     )
     shipping_country = SelectField(
         "Country",
-        choices=[("US", "United States"), ("CA", "Canada"), ("GB", "United Kingdom"), ("AU", "Australia")],
+        choices=[
+            ("US", "United States"),
+            ("CA", "Canada"),
+            ("GB", "United Kingdom"),
+            ("AU", "Australia"),
+        ],
         default="US",
         validators=[DataRequired()],
     )
