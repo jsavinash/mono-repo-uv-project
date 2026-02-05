@@ -55,6 +55,8 @@ offers-seed = "python ./services/offers/manage.py seed"
 offers-runserver = "python ./services/offers/manage.py runserver"
 array-fixed = "python ./packages/data_structure/src/data_structure/array/size/fixed.py" #uv run poe array-fixed
 concepts = "mypy ./packages/concepts/src/concepts/type_safety.py" #uv run poe concepts
+mypy-control-statement = "mypy ./packages/programming/src/programming/control_statement.py" #uv run poe concepts
+py-control-statement = "python ./packages/programming/src/programming/control_statement.py" #uv run poe concepts
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"
@@ -178,6 +180,8 @@ members = [
     "packages/data_structure",
     "packages/algorithms",
     "packages/concepts",
+    "packages/programming",
+    "packages/competitive-programming",
 ]
 
 [tool.mypy]

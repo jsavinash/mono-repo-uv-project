@@ -8,6 +8,7 @@ members = [
     "archival",
     "cart",
     "cli",
+    "competitive-programming",
     "concepts",
     "core",
     "data-structure",
@@ -18,6 +19,7 @@ members = [
     "order",
     "payment",
     "product",
+    "programming",
     "python-mono-repo-starter-kit",
     "recommendations",
     "serviceability",
@@ -536,6 +538,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/a2/61/f083b5ac52e505dfc
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6d/c1/e419ef3723a074172b68aaa89c9f3de486ed4c2399e2dbd8113a4fdcaf9e/colorlog-6.10.1-py3-none-any.whl", hash = "sha256:2d7e8348291948af66122cff006c9f8da6255d224e7cf8e37d8de2df3bad8c9c", size = 11743, upload-time = "2025-10-16T16:14:10.512Z" },
 ]
+
+[[package]]
+name = "competitive-programming"
+version = "0.1.0"
+source = { editable = "packages/competitive-programming" }
 
 [[package]]
 name = "concepts"
@@ -1956,6 +1963,11 @@ wheels = [
 name = "product"
 version = "0.1.0"
 source = { virtual = "services/product" }
+
+[[package]]
+name = "programming"
+version = "0.1.0"
+source = { editable = "packages/programming" }
 
 [[package]]
 name = "prometheus-client"
