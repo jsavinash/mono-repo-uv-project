@@ -1,0 +1,19 @@
+# Low Cohesion
+# (Do everything)
+class UserProcessor:
+    def save_to_db(self): ...
+
+    def send_mail(self): ...
+
+    def validate(self): ...
+
+
+# High Cohesion
+# (Single Responsibility)
+class UserDB: ...
+
+
+class Mailer: ...
+
+
+class Validator: ...
