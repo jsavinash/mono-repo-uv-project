@@ -57,6 +57,16 @@ array-fixed = "python ./packages/data_structure/src/data_structure/array/size/fi
 concepts = "mypy ./packages/concepts/src/concepts/type_safety.py" #uv run poe concepts
 mypy-control-statement = "mypy ./packages/programming/src/programming/control_statement.py" #uv run poe concepts
 py-control-statement = "python ./packages/programming/src/programming/control_statement.py" #uv run poe concepts
+mypy-comments = "mypy ./packages/programming/src/programming/comments.py" #uv run poe concepts
+py-comments = "python ./packages/programming/src/programming/comments.py" #uv run poe concepts
+mypy-object = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/object.py" #uv run poe concepts
+py-object = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/object.py" #uv run poe concepts
+mypy-class = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/class.py" #uv run poe concepts
+py-class = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/class.py" #uv run poe concepts
+mypy-inheritance = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/inheritance.py" #uv run poe concepts
+py-inheritance = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/inheritance.py" #uv run poe concepts
+mypy-polymorphism = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/polymorphism.py" #uv run poe concepts
+py-polymorphism = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/polymorphism.py" #uv run poe concepts
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"
