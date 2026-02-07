@@ -69,6 +69,8 @@ mypy-polymorphism = "mypy ./packages/programming/src/programming/intermediate/ob
 py-polymorphism = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/polymorphism.py" #uv run poe concepts
 mypy-encapsulation = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/encapsulation.py" #uv run poe concepts
 py-encapsulation = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/encapsulation.py" #uv run poe concepts
+mypy-datatype = "mypy ./packages/programming/src/programming/basic/data_type.py" #uv run poe concepts
+py-datatype = "python ./packages/programming/src/programming/basic/data_type.py" #uv run poe concepts
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"
