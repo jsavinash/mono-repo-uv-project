@@ -43,6 +43,7 @@ dependencies = [
     "aiosql>=15.0",
     "email-validator>=2.3.0",
     "flask-login>=0.6.3",
+    "datetime>=6.0",
 ]
 
 [tool.poe]
@@ -71,6 +72,10 @@ mypy-encapsulation = "mypy ./packages/programming/src/programming/intermediate/o
 py-encapsulation = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/encapsulation.py" #uv run poe concepts
 mypy-datatype = "mypy ./packages/programming/src/programming/basic/data_type.py" #uv run poe concepts
 py-datatype = "python ./packages/programming/src/programming/basic/data_type.py" #uv run poe concepts
+mypy-itr = "mypy ./packages/programming/src/programming/intermediate/iterator.py" #uv run poe concepts
+py-itr = "python ./packages/programming/src/programming/intermediate/iterator.py" #uv run poe concepts
+mypy-date = "mypy ./packages/programming/src/programming/intermediate/date.py" #uv run poe concepts
+py-date = "python ./packages/programming/src/programming/intermediate/date.py" #uv run poe concepts
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"

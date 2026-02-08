@@ -311,17 +311,215 @@ class DataType(IDataType):
             demo = thistuple + y
             print(demo)
 
+        def unpacking_tuple() -> None:
+            print(" ********************* Unpacking tuple *********************")
+            # unpacking with * will give rest of the value in list
+            (a, b, *red, c) = ("apple", "banana", "cherry", "pinapple", "grape")
+            print(a)  # str
+            print(b)  # str
+            print(red)  # list
+            print(c)  # str
+
+        def loop_tuple() -> None:
+            print(" ********************* Loop tuple *********************")
+            thistuple = ("apple", "banana", "cherry")
+            for x in thistuple:
+                print(x)
+            for i in range(len(thistuple)):
+                print(thistuple[i])
+                j = 0
+            while j < len(thistuple):
+                print(thistuple[j])
+                j += 1
+
+        def join_loop_tuple() -> None:
+            print(" ********************* Join Loop tuple *********************")
+            thistuple = ["a", "b"]
+            thistuple_2 = ["c", "d"]
+            print(thistuple + thistuple_2)  # contcatenation
+            print(thistuple * 2)  # multiply
+
+        def method_tuple() -> None:
+            print(" ********************* Method Loop tuple *********************")
+            thistuple_2 = ["c", "d", "c", "d"]
+            print(thistuple_2.count("d"))
+            print(thistuple_2.index("d"))
+
+        def range_method() -> None:
+            print(" ********************* Range Method tuple *********************")
+            for k in range(0, 10, 2):
+                print(k)
+
         access_tuple()
         change_item_tuple()
         add_item_tuple()
+        unpacking_tuple()
+        loop_tuple()
+        join_loop_tuple()
+        method_tuple()
+        range_method()
 
     @override
     def mappingType(self) -> None:  # 	dict
-        print("Demo")
+        print(" ********************* Dict *********************")
+        """
+        Dictionaries are used to store data values in key:value pairs.
+        A dictionary is a collection which is ordered*, changeable and do not allow duplicates.
+        """
+        thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+        print(thisdict)
+        print(len(thisdict))
+        print(type(thisdict))
+        # The dict() Constructor
+        print(dict(name="Avinash"))
+
+        def access_dict() -> None:
+            print(" ********************* Access Dict *********************")
+            thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+            print(thisdict["brand"])  # via referring key
+            print(thisdict.get("model"))  # get method
+            keys = thisdict.keys()
+            values = thisdict.values()
+            items = thisdict.items()
+            print(keys)  # Return list with keys
+            print(values)  # Return list with values
+            print(items)  # Return list of dict.
+            for item in items:
+                print(f"{item[0]} :: {item[1]}")
+            print("brand" in thisdict)
+            print("brand" not in thisdict)
+
+        def change_dict() -> None:
+            print(" ********************* Change Dict *********************")
+            thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+            print(thisdict)
+            thisdict["brand"] = "Tata"
+            print(thisdict)
+            thisdict.update({"year": 2020})
+            print(thisdict)
+
+        def add_dict() -> None:
+            print(" ********************* Add Dict *********************")
+            thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+            print(thisdict)
+            thisdict["wheels"] = 4
+            print(thisdict)
+            thisdict.update({"color": "red"})
+            print(thisdict)
+
+        def remove_dict() -> None:
+            print(" ********************* Remove Dict *********************")
+            thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+            del thisdict["year"]
+            print(thisdict)
+            thisdict.pop("model")
+            print(thisdict)
+            thisdict.popitem()
+            print(thisdict)
+            # del thisdict
+
+        def loop_dict() -> None:
+            print(" ********************* Loop Dict *********************")
+            thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+            keys = thisdict.keys()
+            values = thisdict.values()
+            items = thisdict.items()
+            for i in keys:
+                print(i)
+            for j in values:
+                print(j)
+            for k, l in items:
+                print(f"{k} :: {l}")
+
+        def copy_dict() -> None:
+            print(" ********************* Copy Dict *********************")
+            thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}
+            print(thisdict.copy())
+            print(dict(thisdict))
+
+        access_dict()
+        change_dict()
+        add_dict()
+        remove_dict()
+        loop_dict()
+        copy_dict()
 
     @override
     def setType(self) -> None:  # 	set, frozenset
-        print("Demo")
+        print(" ********************* Set *********************")
+        # A set is a collection which is unordered, unchangeable*, and unindexed.
+        myset = {"apple", "banana", "cherry"}
+        print(myset)
+        print(type(myset))
+        print(len(myset))
+
+        def access_or_loop_set() -> None:
+            print(" ********************* Access or Loop Set *********************")
+            for x in myset:
+                print(x)
+            print("apple" in myset)
+            print("apple" not in myset)
+
+        def change_set() -> None:
+            print(" ********************* Change Set *********************")
+            print("Once it's created, we can't changed it")
+
+        def add_item() -> None:
+            print(" ********************* Add Set *********************")
+            myset.add("pinapple")
+            print(myset)
+            add_newset = {"coconut"}  # set
+            add_newset_2 = ["jackfruit"]  # list
+            myset.update(add_newset, add_newset_2)
+            print(myset)
+
+        def remove_item() -> None:
+            print(" ********************* Remove Set *********************")
+            myset.remove("banana")  # will raise error if not exist
+            myset.discard("banana")  # will not raise error if not exist
+            myset.pop()  # will remove random items
+            myset.clear()
+            # del myset
+            print(myset)
+
+        def join_item() -> None:
+            print(" ********************* Join Set *********************")
+            set1 = {"a", "b", "c"}
+            set2 = {1, 2, 3}
+            # print(set3.update(set2)) #Add element from set2 to set1
+            print("union ::", set1.union(set2))  # union
+            print(" | ::", set1 | set2)  # union
+            print("intersection ::", set1.intersection(set2))  # intersection
+            print(" & ::", set1 & set2)  # intersection
+            set3 = {"a", "b", "c"}
+            set4 = {"c", "d", "e"}
+            print(
+                "difference ::", set3.difference(set4)
+            )  # difference find item from set3 which is there in set4 and remove it.
+            print(
+                " - ::", set3 - set4
+            )  # difference find item from set3 which is there in set4 and remove it.
+            # print("difference ::", set3.difference_update(set4)) #difference find item from set3 which is there in set4 and remove it.
+            print(
+                "symmetric difference ::", set3.symmetric_difference(set4)
+            )  # difference find item from set3 which is there in set4 and remove it.
+            print(
+                " ^ ::", set3 ^ set4
+            )  # difference find item from set3 which is there in set4 and remove it.
+
+        def forzeset() -> None:
+            print(" ********************* forzeset *********************")
+            x = frozenset({"apple", "banana", "cherry"})
+            print(x)
+            print(type(x))
+
+
+        access_or_loop_set()
+        change_set()
+        add_item()
+        remove_item()
+        join_item()
+        forzeset()
 
     @override
     def booleanType(self) -> None:  # 	bool
@@ -348,4 +546,6 @@ dataType = DataType()
 # dataType.booleanType()
 # dataType.noneType()
 # dataType.numericTypes()
-dataType.sequenceTypes()
+# dataType.sequenceTypes()
+# dataType.mappingType()
+dataType.setType()

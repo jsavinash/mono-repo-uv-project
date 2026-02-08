@@ -661,6 +661,19 @@ version = "0.1.0"
 source = { editable = "packages/data_structure" }
 
 [[package]]
+name = "datetime"
+version = "6.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pytz" },
+    { name = "zope-interface" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/32/decbfd165e9985ba9d8c2d34a39afe5aeba2fc3fe390eb6e9ef1aab98fa8/datetime-6.0.tar.gz", hash = "sha256:c1514936d2f901e10c8e08d83bf04e6c9dbd7ca4f244da94fec980980a3bc4d5", size = 64167, upload-time = "2025-11-25T08:00:34.586Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/7a/ea0f3e3ea74be36fc7cf54f966cde732a3de72697983cdb5646b0a4dacde/datetime-6.0-py3-none-any.whl", hash = "sha256:d19988f0657a4e72c9438344157254a8dcad6aea8cd5ae70a5d1b5a75e5dc930", size = 52637, upload-time = "2025-11-25T08:00:33.077Z" },
+]
+
+[[package]]
 name = "dependency-groups"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2294,6 +2307,7 @@ dependencies = [
     { name = "bcrypt" },
     { name = "click" },
     { name = "core" },
+    { name = "datetime" },
     { name = "email-validator" },
     { name = "environ" },
     { name = "fastapi" },
@@ -2366,6 +2380,7 @@ requires-dist = [
     { name = "bcrypt", specifier = ">=5.0.0" },
     { name = "click", specifier = ">=8.3.1" },
     { name = "core", editable = "packages/core" },
+    { name = "datetime", specifier = ">=6.0" },
     { name = "email-validator", specifier = ">=2.3.0" },
     { name = "environ", specifier = ">=1.0" },
     { name = "fastapi", specifier = ">=0.128.0" },
@@ -3169,4 +3184,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/01/e4/633d080897e769ed5712dcfad626e55dbd6cf45db0ff4d9884315c6a82da/wtforms-3.2.1.tar.gz", hash = "sha256:df3e6b70f3192e92623128123ec8dca3067df9cfadd43d59681e210cfb8d4682", size = 137801, upload-time = "2024-10-21T11:34:00.108Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/08/c9/2088fb5645cd289c99ebe0d4cdcc723922a1d8e1beaefb0f6f76dff9b21c/wtforms-3.2.1-py3-none-any.whl", hash = "sha256:583bad77ba1dd7286463f21e11aa3043ca4869d03575921d1a1698d0715e0fd4", size = 152454, upload-time = "2024-10-21T11:33:58.44Z" },
+]
+
+[[package]]
+name = "zope-interface"
+version = "8.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/86/a4/77daa5ba398996d16bb43fc721599d27d03eae68fe3c799de1963c72e228/zope_interface-8.2.tar.gz", hash = "sha256:afb20c371a601d261b4f6edb53c3c418c249db1a9717b0baafc9a9bb39ba1224", size = 254019, upload-time = "2026-01-09T07:51:07.253Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1a/da/3c89de3917751446728b8898b4d53318bc2f8f6bf8196e150a063c59905e/zope_interface-8.2-cp314-cp314-macosx_10_9_x86_64.whl", hash = "sha256:46c7e4e8cbc698398a67e56ca985d19cb92365b4aafbeb6a712e8c101090f4cb", size = 209223, upload-time = "2026-01-09T08:05:36.449Z" },
+    { url = "https://files.pythonhosted.org/packages/00/7f/62d00ec53f0a6e5df0c984781e6f3999ed265129c4c3413df8128d1e0207/zope_interface-8.2-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:a87fc7517f825a97ff4a4ca4c8a950593c59e0f8e7bfe1b6f898a38d5ba9f9cf", size = 209366, upload-time = "2026-01-09T08:05:38.197Z" },
+    { url = "https://files.pythonhosted.org/packages/ef/a2/f241986315174be8e00aabecfc2153cf8029c1327cab8ed53a9d979d7e08/zope_interface-8.2-cp314-cp314-manylinux1_i686.manylinux2014_i686.manylinux_2_17_i686.manylinux_2_5_i686.whl", hash = "sha256:ccf52f7d44d669203c2096c1a0c2c15d52e36b2e7a9413df50f48392c7d4d080", size = 261037, upload-time = "2026-01-09T08:05:39.568Z" },
+    { url = "https://files.pythonhosted.org/packages/02/cc/b321c51d6936ede296a1b8860cf173bee2928357fe1fff7f97234899173f/zope_interface-8.2-cp314-cp314-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl", hash = "sha256:aae807efc7bd26302eb2fea05cd6de7d59269ed6ae23a6de1ee47add6de99b8c", size = 264219, upload-time = "2026-01-09T08:05:41.624Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/fb/5f5e7b40a2f4efd873fe173624795ca47eaa22e29051270c981361b45209/zope_interface-8.2-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:05a0e42d6d830f547e114de2e7cd15750dc6c0c78f8138e6c5035e51ddfff37c", size = 264390, upload-time = "2026-01-09T08:05:42.936Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/82/3f2bc594370bc3abd58e5f9085d263bf682a222f059ed46275cde0570810/zope_interface-8.2-cp314-cp314-win_amd64.whl", hash = "sha256:561ce42390bee90bae51cf1c012902a8033b2aaefbd0deed81e877562a116d48", size = 212585, upload-time = "2026-01-09T08:05:44.419Z" },
 ]
