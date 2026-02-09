@@ -44,6 +44,8 @@ dependencies = [
     "email-validator>=2.3.0",
     "flask-login>=0.6.3",
     "datetime>=6.0",
+    "pathlib>=1.0.1",
+    "asyncio>=4.0.0",
 ]
 
 [tool.poe]
@@ -76,6 +78,30 @@ mypy-itr = "mypy ./packages/programming/src/programming/intermediate/iterator.py
 py-itr = "python ./packages/programming/src/programming/intermediate/iterator.py" #uv run poe concepts
 mypy-date = "mypy ./packages/programming/src/programming/intermediate/date.py" #uv run poe concepts
 py-date = "python ./packages/programming/src/programming/intermediate/date.py" #uv run poe concepts
+mypy-math = "mypy ./packages/programming/src/programming/intermediate/math.py" #uv run poe concepts
+py-math = "python ./packages/programming/src/programming/intermediate/math.py" #uv run poe concepts
+mypy-json = "mypy ./packages/programming/src/programming/intermediate/json_loader.py" #uv run poe concepts
+py-json = "python ./packages/programming/src/programming/intermediate/json_loader.py" #uv run poe concepts
+mypy-re = "mypy ./packages/programming/src/programming/intermediate/re_regex.py" #uv run poe concepts
+py-re = "python ./packages/programming/src/programming/intermediate/re_regex.py" #uv run poe concepts
+mypy-file = "mypy ./packages/programming/src/programming/intermediate/file_manager.py" #uv run poe concepts
+py-file = "python ./packages/programming/src/programming/intermediate/file_manager.py" #uv run poe concepts
+mypy-lambda = "mypy ./packages/programming/src/programming/intermediate/lambda_function.py" #uv run poe concepts
+py-lambda = "python ./packages/programming/src/programming/intermediate/lambda_function.py" #uv run poe concepts
+mypy-fun = "mypy ./packages/programming/src/programming/intermediate/function_file.py" #uv run poe concepts
+py-fun = "python ./packages/programming/src/programming/intermediate/function_file.py" #uv run poe concepts
+mypy-scope = "mypy ./packages/programming/src/programming/intermediate/scope.py" #uv run poe concepts
+py-scope = "python ./packages/programming/src/programming/intermediate/scope.py" #uv run poe concepts
+mypy-decorator = "mypy ./packages/programming/src/programming/intermediate/decorator.py" #uv run poe concepts
+py-decorator = "python ./packages/programming/src/programming/intermediate/decorator.py" #uv run poe concepts
+mypy-recursion = "mypy ./packages/programming/src/programming/intermediate/recursion.py" #uv run poe concepts
+py-recursion = "python ./packages/programming/src/programming/intermediate/recursion.py" #uv run poe concepts
+mypy-generator = "mypy ./packages/programming/src/programming/intermediate/generator.py" #uv run poe concepts
+py-generator = "python ./packages/programming/src/programming/intermediate/generator.py" #uv run poe concepts
+mypy-context = "mypy ./packages/programming/src/programming/intermediate/context_manager.py" #uv run poe concepts
+py-context = "python ./packages/programming/src/programming/intermediate/context_manager.py" #uv run poe concepts
+mypy-concurrency = "mypy ./packages/programming/src/programming/intermediate/concurrency.py" #uv run poe concepts
+py-concurrency = "python ./packages/programming/src/programming/intermediate/concurrency.py" #uv run poe concepts
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"
