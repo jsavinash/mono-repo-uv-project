@@ -47,8 +47,3 @@ def rolling_dics_bar_plot():
 
     # Display the plot
     plt.show()
-
-
-def main() -> None:
-    print("Hello from maths!")
-    rolling_dics_bar_plot()

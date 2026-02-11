@@ -16,6 +16,7 @@ dependencies = [
 
 [project.scripts]
 maths = "maths:main" #uv run --package maths maths
+rolling_dics_bar_plot = "maths.probability.experimental_probability:rolling_dics_bar_plot" #uv run --package maths rolling_dics_bar_plot
 
 [build-system]
 requires = ["uv_build>=0.9.27,<0.10.0"]
