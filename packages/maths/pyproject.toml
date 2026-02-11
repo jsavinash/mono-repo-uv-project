@@ -1,0 +1,22 @@
+[project]
+name = "maths"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Avinash Nishad", email = "js.avinash.nishad@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.2",
+    "pandas>=3.0.0",
+    "scipy>=1.17.0",
+]
+
+[project.scripts]
+maths = "maths:main" #uv run --package maths maths
+
+[build-system]
+requires = ["uv_build>=0.9.27,<0.10.0"]
+build-backend = "uv_build"

@@ -126,6 +126,8 @@ notification = "notification.main:app"
 serviceability = "serviceability.main:app"
 payment = "payment.main:app"
 
+#credit_card_fraud_detection
+
 [build-system]
 requires = ["hatchling>=1.26"] # Specifies the build dependencies
 build-backend = "hatchling.build"
@@ -152,7 +154,8 @@ packages = [
     "services/payment",
     "libs/shared",
     "packages/core",
-    "tools/cli"
+    "tools/cli",
+    "packages/maths"
 ]
 
 [dependency-groups]
@@ -227,6 +230,7 @@ members = [
     "packages/concepts",
     "packages/programming",
     "packages/competitive-programming",
+    "packages/maths",
 ]
 
 [tool.mypy]
