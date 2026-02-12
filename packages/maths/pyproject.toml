@@ -12,11 +12,15 @@ dependencies = [
     "numpy>=2.4.2",
     "pandas>=3.0.0",
     "scipy>=1.17.0",
+    "seaborn>=0.13.2",
 ]
 
 [project.scripts]
 maths = "maths:main" #uv run --package maths maths
 rolling_dics_bar_plot = "maths.probability.experimental_probability:rolling_dics_bar_plot" #uv run --package maths rolling_dics_bar_plot
+plot_measure_of_central_tendency = "maths.statistic.descriptive_statistics.measure_of_central_tendency:plot_measure_of_central_tendency" #uv run --package maths rolling_dics_bar_plot
+plot_data_range = "maths.statistic.descriptive_statistics.measure_of_variability:plot_data_range" #uv run --package maths rolling_dics_bar_plot
+plot_variance = "maths.statistic.descriptive_statistics.measure_of_variability:plot_variance" #uv run --package maths rolling_dics_bar_plot
 
 [build-system]
 requires = ["uv_build>=0.9.27,<0.10.0"]
