@@ -53,11 +53,27 @@ def line_plot_pizza_price(df):
     df.plot(x="Diameter in Inches", y="Prize in Dollars", title="Pizza Price")
     plt.show()
 
+def calculate_line(df):
+    coefficients = np.polyfit(df['Diameter in Inches'], df['Prize in Dollars'], deg=1)
+    slope, intercept = coefficients[0], coefficients[1]
+    line = slope * df['Diameter in Inches'] + intercept
+    print(f"Slope (m): {slope}, Intercept (b): {intercept}, Line (l) : {line}")
+    parameters = {
+        "line": line,
+        "coefficients": coefficients
+    }
+    return parameters
 
-def scatter_plot_pizza_price(df):
+def predicator(coefficients):
+    polynomial = np.poly1d(coefficients)
+    predicted_y = polynomial(9)
+    print(f"Predicted y for x=9: {predicted_y}")
+    #The resulting polynomial object can also be printed directly to see the equation
+    print(polynomial)
+
+def scatter_plot_pizza_price(df, line):
     a = [200, 300, 400] # size
     b = ['red', 'green', 'blue'] # color
-
     plt.scatter(
         x=df["Diameter in Inches"],
         y=df["Prize in Dollars"],
@@ -67,6 +83,7 @@ def scatter_plot_pizza_price(df):
         edgecolors='w',
         linewidths=1
     )
+    plt.plot(df["Diameter in Inches"], line, color='red', label='Line of Best Fit')
     plt.title("Pizza Price Scatter Plot")
     plt.xlabel("Diameter in Inches")
     plt.ylabel("Prize in Dollars")
@@ -79,4 +96,7 @@ def main() -> None:
     pizza_price = load_csv_to_numpy()
     df = load_numpy_to_dataframe(pizza_price)
     #line_plot_pizza_price(df)
-    scatter_plot_pizza_price(df)
+    parameters = calculate_line(df)
+    predicator(parameters["coefficients"])
+    scatter_plot_pizza_price(df, parameters["line"])
+
