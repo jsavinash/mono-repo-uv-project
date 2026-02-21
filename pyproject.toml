@@ -231,6 +231,7 @@ members = [
     "packages/programming",
     "packages/competitive-programming",
     "packages/maths",
+    "packages/machine-learning",
 ]
 
 [tool.mypy]
