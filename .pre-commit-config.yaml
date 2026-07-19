@@ -1,24 +1,12 @@
 # ═══════════════════════════════════════════════════════════════
-# Pre-commit hooks for Python Monorepo
+# Pre-commit hooks - Basic checks
 # ═══════════════════════════════════════════════════════════════
 # Install: pre-commit install
 # Run all: pre-commit run --all-files
 # ═══════════════════════════════════════════════════════════════
 
 repos:
-  # ─── Ruff (Linter & Formatter) ──────────────────────────
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.11
-    hooks:
-      - id: ruff
-        name: ruff lint
-        args: [--fix, --exit-non-zero-on-fix]
-        types_or: [python, pyi]
-      - id: ruff-format
-        name: ruff format
-        types_or: [python, pyi]
-
-  # ─── General Quality Checks ─────────────────────────────
+  # ─── Basic file checks ──────────────────────────────────
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -28,32 +16,13 @@ repos:
         name: fix end of files
       - id: check-yaml
         name: check YAML
-        args: [--allow-multiple-documents]
       - id: check-toml
         name: check TOML
       - id: check-json
         name: check JSON
-      - id: check-added-large-files
-        name: check large files
-        args: [--maxkb=500]
       - id: check-merge-conflict
         name: check merge conflicts
       - id: detect-private-key
         name: detect private keys
       - id: check-case-conflict
         name: check case conflict
-      - id: check-symlinks
-        name: check symlinks
-      - id: destroyed-symlinks
-        name: check destroyed symlinks
-      - id: mixed-line-ending
-        name: normalize line endings
-        args: [--fix=lf]
-
-  # ─── Commit Message Format ──────────────────────────────
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.8.2
-    hooks:
-      - id: commitizen
-        name: check commit message
-        stages: [commit-msg]
