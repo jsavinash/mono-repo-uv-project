@@ -87,7 +87,10 @@ docs = [
 ]
 licenses = ["pip-licenses-cli"]
 debugging_tool = ["pysnooper"]
-dev = ["poethepoet>=0.40.0"]
+dev = [
+    "poethepoet>=0.40.0",
+    "pre-commit>=4.6.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["services", "packages", "libs", "tools", "apps"]
