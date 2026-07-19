@@ -1,15 +1,157 @@
 services:
-  db:
-    image: postgres:16 # Use a specific version, e.g., postgres:16
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: books_database
-    ports:
-      - "5434:5432" # Map port 5432 on your host to the container
+  # ─── Django API ───────────────────────────────────────────
+  django-api:
+    build:
+      context: ./apps/django-api
+      dockerfile: Dockerfile
+    container_name: django-api
+    command: gunicorn src.config.wsgi:application --bind 0.0.0.0:8000 --reload
     volumes:
-      - pgdata:/var/lib/postgresql/data # Persist data across container restarts
+      - ./apps/django-api:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./apps/django-api/.env
+    depends_on:
+      django-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - monorepo-net
+
+  django-celery-worker:
+    build:
+      context: ./apps/django-api
+      dockerfile: Dockerfile
+    container_name: django-celery-worker
+    command: celery -A src.celery_app worker --loglevel=info
+    volumes:
+      - ./apps/django-api:/app
+    env_file:
+      - ./apps/django-api/.env
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - monorepo-net
+
+  django-db:
+    image: postgres:16-alpine
+    container_name: django-db
+    environment:
+      POSTGRES_DB: django_api
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: django_pass
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U django_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    volumes:
+      - django_pgdata:/var/lib/postgresql/data
+    networks:
+      - monorepo-net
+
+  # ─── Flask API ───────────────────────────────────────────
+  flask-api:
+    build:
+      context: ./apps/flask-api
+      dockerfile: Dockerfile
+    container_name: flask-api
+    command: gunicorn "src.app:create_app()" --bind 0.0.0.0:5000 --reload
+    volumes:
+      - ./apps/flask-api:/app
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./apps/flask-api/.env
+    depends_on:
+      flask-db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - monorepo-net
+
+  flask-celery-worker:
+    build:
+      context: ./apps/flask-api
+      dockerfile: Dockerfile
+    container_name: flask-celery-worker
+    command: celery -A src.celery_app worker --loglevel=info
+    volumes:
+      - ./apps/flask-api:/app
+    env_file:
+      - ./apps/flask-api/.env
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - monorepo-net
+
+  flask-db:
+    image: postgres:16-alpine
+    container_name: flask-db
+    environment:
+      POSTGRES_DB: flask_api
+      POSTGRES_USER: flask_user
+      POSTGRES_PASSWORD: flask_pass
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flask_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    volumes:
+      - flask_pgdata:/var/lib/postgresql/data
+    networks:
+      - monorepo-net
+
+  # ─── Streamlit Frontend ──────────────────────────────────
+  frontend:
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    command: streamlit run src/app.py --server.port=8501 --server.address=0.0.0.0
+    volumes:
+      - ./apps/frontend:/app
+    ports:
+      - "8501:8501"
+    env_file:
+      - ./apps/frontend/.env
+    depends_on:
+      - django-api
+      - flask-api
+    restart: unless-stopped
+    networks:
+      - monorepo-net
+
+  # ─── Shared Services ─────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: monorepo-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - monorepo-net
+
+networks:
+  monorepo-net:
+    driver: bridge
 
 volumes:
-  pgdata:
+  django_pgdata:
+  flask_pgdata:
+  redis_data:

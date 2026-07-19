@@ -1,50 +1,19 @@
 [project]
 name = "python-mono-repo-starter-kit"
 version = "0.1.0"
-description = "A uv-based monorepo starter with a web app, API service, and Python packages"
+description = "A uv-based monorepo starter with Django API, Flask API, Streamlit frontend, and Python packages"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "rich",
     "typer-slim[standard]",
     "python-dotenv>=1.2.1",
-    "flask>=3.1.2",
-    "flask-sqlalchemy>=3.1.1",
     "click>=8.3.1",
-    "environ>=1.0",
-    "flask-migrate>=4.1.0",
     "sqlalchemy>=2.0.46",
+    "setuptools>=80.10.2",
     "core",
     "shared",
     "packages",
-    "psycopg2-binary>=2.9.11",
-    "psycopg2>=2.9.11",
-    "flask-db>=0.4.1",
-    "flask-debugtoolbar>=0.16.0",
-    "flask-secrets>=0.1.0",
-    "flask-static-digest>=0.4.1",
-    "gunicorn>=24.1.1",
-    "jinja2>=3.1.6",
-    "psycopg>=3.3.2",
-    "werkzeug>=3.1.5",
-    "setuptools>=80.10.2",
-    "fastapi>=0.128.0",
-    "starlette>=0.50.0",
-    "slugify>=0.0.1",
-    "jwt>=1.4.0",
-    "passlib>=1.7.4",
-    "bcrypt>=5.0.0",
-    "uvicorn>=0.40.0",
-    "asyncpg>=0.31.0",
-    "pypika>=0.50.0",
-    "loguru>=0.7.3",
-    "pydantic-settings>=2.12.0",
-    "aiosql>=15.0",
-    "email-validator>=2.3.0",
-    "flask-login>=0.6.3",
-    "datetime>=6.0",
-    "pathlib>=1.0.1",
-    "asyncio>=4.0.0",
 ]
 
 [project.optional-dependencies]
@@ -63,150 +32,68 @@ dev = [
 executor.type = "uv"
 
 [tool.poe.tasks]
-#uv run poe offers-migrate
-offers-migrate = "python ./services/offers/manage.py migrate"
-offers-seed = "python ./services/offers/manage.py seed"
-offers-runserver = "python ./services/offers/manage.py runserver"
-array-fixed = "python ./packages/data_structure/src/data_structure/array/size/fixed.py" #uv run poe array-fixed
-concepts = "mypy ./packages/concepts/src/concepts/type_safety.py" #uv run poe concepts
-mypy-control-statement = "mypy ./packages/programming/src/programming/control_statement.py" #uv run poe concepts
-py-control-statement = "python ./packages/programming/src/programming/control_statement.py" #uv run poe concepts
-mypy-comments = "mypy ./packages/programming/src/programming/comments.py" #uv run poe concepts
-py-comments = "python ./packages/programming/src/programming/comments.py" #uv run poe concepts
-mypy-object = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/object.py" #uv run poe concepts
-py-object = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/object.py" #uv run poe concepts
-mypy-class = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/class.py" #uv run poe concepts
-py-class = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/class.py" #uv run poe concepts
-mypy-inheritance = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/inheritance.py" #uv run poe concepts
-py-inheritance = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/inheritance.py" #uv run poe concepts
-mypy-polymorphism = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/polymorphism.py" #uv run poe concepts
-py-polymorphism = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/polymorphism.py" #uv run poe concepts
-mypy-encapsulation = "mypy ./packages/programming/src/programming/intermediate/object_oriented_programming/encapsulation.py" #uv run poe concepts
-py-encapsulation = "python ./packages/programming/src/programming/intermediate/object_oriented_programming/encapsulation.py" #uv run poe concepts
-mypy-datatype = "mypy ./packages/programming/src/programming/basic/data_type.py" #uv run poe concepts
-py-datatype = "python ./packages/programming/src/programming/basic/data_type.py" #uv run poe concepts
-mypy-itr = "mypy ./packages/programming/src/programming/intermediate/iterator.py" #uv run poe concepts
-py-itr = "python ./packages/programming/src/programming/intermediate/iterator.py" #uv run poe concepts
-mypy-date = "mypy ./packages/programming/src/programming/intermediate/date.py" #uv run poe concepts
-py-date = "python ./packages/programming/src/programming/intermediate/date.py" #uv run poe concepts
-mypy-math = "mypy ./packages/programming/src/programming/intermediate/math.py" #uv run poe concepts
-py-math = "python ./packages/programming/src/programming/intermediate/math.py" #uv run poe concepts
-mypy-json = "mypy ./packages/programming/src/programming/intermediate/json_loader.py" #uv run poe concepts
-py-json = "python ./packages/programming/src/programming/intermediate/json_loader.py" #uv run poe concepts
-mypy-re = "mypy ./packages/programming/src/programming/intermediate/re_regex.py" #uv run poe concepts
-py-re = "python ./packages/programming/src/programming/intermediate/re_regex.py" #uv run poe concepts
-mypy-file = "mypy ./packages/programming/src/programming/intermediate/file_manager.py" #uv run poe concepts
-py-file = "python ./packages/programming/src/programming/intermediate/file_manager.py" #uv run poe concepts
-mypy-lambda = "mypy ./packages/programming/src/programming/intermediate/lambda_function.py" #uv run poe concepts
-py-lambda = "python ./packages/programming/src/programming/intermediate/lambda_function.py" #uv run poe concepts
-mypy-fun = "mypy ./packages/programming/src/programming/intermediate/function_file.py" #uv run poe concepts
-py-fun = "python ./packages/programming/src/programming/intermediate/function_file.py" #uv run poe concepts
-mypy-scope = "mypy ./packages/programming/src/programming/intermediate/scope.py" #uv run poe concepts
-py-scope = "python ./packages/programming/src/programming/intermediate/scope.py" #uv run poe concepts
-mypy-decorator = "mypy ./packages/programming/src/programming/intermediate/decorator.py" #uv run poe concepts
-py-decorator = "python ./packages/programming/src/programming/intermediate/decorator.py" #uv run poe concepts
-mypy-recursion = "mypy ./packages/programming/src/programming/intermediate/recursion.py" #uv run poe concepts
-py-recursion = "python ./packages/programming/src/programming/intermediate/recursion.py" #uv run poe concepts
-mypy-generator = "mypy ./packages/programming/src/programming/intermediate/generator.py" #uv run poe concepts
-py-generator = "python ./packages/programming/src/programming/intermediate/generator.py" #uv run poe concepts
-mypy-context = "mypy ./packages/programming/src/programming/intermediate/context_manager.py" #uv run poe concepts
-py-context = "python ./packages/programming/src/programming/intermediate/context_manager.py" #uv run poe concepts
-mypy-concurrency = "mypy ./packages/programming/src/programming/intermediate/concurrency.py" #uv run poe concepts
-py-concurrency = "python ./packages/programming/src/programming/intermediate/concurrency.py" #uv run poe concepts
+# Django API
+django-migrate = "cd apps/django-api && python manage.py migrate"
+django-runserver = "cd apps/django-api && python manage.py runserver"
+django-test = "cd apps/django-api && pytest"
+
+# Flask API
+flask-run = "cd apps/flask-api && flask run"
+flask-test = "cd apps/flask-api && pytest"
+
+# Frontend
+frontend-run = "cd apps/frontend && streamlit run src/app.py"
+frontend-test = "cd apps/frontend && pytest"
+
+# Boilerplate Generator
+boilerplate-list = "python -m tools.cli.src.cli.boilerplate_generator list-templates"
 
 [project.scripts]
 cli = "cli.src.cli.flask_boilerplate:app"
-#Microservice necessary components
-api-gateway = "api_gateway.main:app"
-config-server = "config_server.main:app"
-service-discovery = "service_discovery.main:app"
-
-#Microservice app base
-user = "user.src.main:command_app"
-item = "item.main:execute"
-item-management = "item_management.main:app"
-product = "product.main:app"
-review-and-ratings = "review_and_ratings.main:app"
-inventory = "inventory.main:execute"
-recommendations = "recommendations.main:app"
-offers = "offers.main:execute"
-cart = "cart.main:execute"
-order = "order.main:app"
-archival = "archival.main:app"
-notification = "notification.main:app"
-serviceability = "serviceability.main:app"
-payment = "payment.main:app"
-
-#credit_card_fraud_detection
+migrations = "cli.src.cli.migrations:main"
+boilerplate = "tools.cli.src.cli.boilerplate_generator:app"
 
 [build-system]
-requires = ["hatchling>=1.26"] # Specifies the build dependencies
+requires = ["hatchling>=1.26"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = [
-    "services/api-service",
-    "services/api-gateway",
-    "services/config-server",
-    "services/service-discovery",
-    "services/user",
-    "services/item",
-    "services/item-management",
-    "services/product",
-    "services/review-and-ratings",
-    "services/inventory",
-    "services/recommendations",
-    "services/offers",
-    "services/cart",
-    "services/order",
-    "services/archival",
-    "services/notification",
-    "services/serviceability",
-    "services/payment",
+    "apps/django-api",
+    "apps/flask-api",
+    "apps/frontend",
     "libs/shared",
     "packages/core",
     "tools/cli",
-    "packages/maths"
+    "packages/maths",
+    "packages/machine-learning",
+    "packages/algorithms",
+    "packages/concepts",
+    "packages/programming",
+    "packages/competitive-programming",
+    "packages/data_structure",
 ]
 
 [dependency-groups]
-nox = [
-    "nox-uv",
-]
-test = [
-    "pytest",
-    "pytest-cov",
-    "pytest-randomly",
-]
-
-type_check = [
-    "mypy",
-]
-
-lint = [
-    "ruff",
-]
-
+nox = ["nox-uv"]
+test = ["pytest", "pytest-cov", "pytest-randomly"]
+type_check = ["mypy"]
+lint = ["ruff"]
 docs = [
     "mkdocs-material",
     "mkdocs-htmlproofer-plugin",
     "mkdocstrings[python]",
     "mkdocs-api-autonav",
 ]
-
-licenses = [
-    "pip-licenses-cli",
-]
-
-debugging_tool = [
-    "pysnooper",
-]
+licenses = ["pip-licenses-cli"]
+debugging_tool = ["pysnooper"]
 dev = [
     "poethepoet>=0.40.0",
+    "pre-commit>=4.6.0",
 ]
 
 [tool.setuptools.packages.find]
-where = ["services", "packages", "libs", "tools"]
+where = ["services", "packages", "libs", "tools", "apps"]
 
 [tool.uv.sources]
 core = { workspace = true }
@@ -215,24 +102,9 @@ tools = { workspace = true }
 
 [tool.uv.workspace]
 members = [
-    "services/api-service",
-    "services/api-gateway",
-    "services/config-server",
-    "services/service-discovery",
-    "services/user",
-    "services/item",
-    "services/item-management",
-    "services/product",
-    "services/review-and-ratings",
-    "services/inventory",
-    "services/recommendations",
-    "services/offers",
-    "services/cart",
-    "services/order",
-    "services/archival",
-    "services/notification",
-    "services/serviceability",
-    "services/payment",
+    "apps/django-api",
+    "apps/flask-api",
+    "apps/frontend",
     "libs/shared",
     "packages/core",
     "tools/cli",
@@ -243,6 +115,7 @@ members = [
     "packages/competitive-programming",
     "packages/maths",
     "packages/machine-learning",
+    "services/*",
 ]
 
 [tool.mypy]
@@ -254,62 +127,24 @@ enable_error_code = ["deprecated", "exhaustive-match", "explicit-override"]
 line-length = 88
 target-version = "py310"
 indent-width = 4
-src = ["services", "packages", "libs", "tools"]
+src = ["apps", "services", "packages", "libs", "tools"]
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".ipynb_checkpoints",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pyenv",
-    ".pytest_cache",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    ".vscode",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "site-packages",
-    "venv",
+    ".bzr", ".direnv", ".eggs", ".git", ".git-rewrite", ".hg",
+    ".ipynb_checkpoints", ".mypy_cache", ".nox", ".pants.d", ".pyenv",
+    ".pytest_cache", ".pytype", ".ruff_cache", ".svn", ".tox", ".venv",
+    ".vscode", "__pypackages__", "_build", "buck-out", "build", "dist",
+    "node_modules", "site-packages", "venv",
 ]
 
 [tool.ruff.lint]
 select = [
-    "F", # pyflakes
-    "E", # pycodestyle
-    "I", # isort
-    "N", # pep8-naming
-    "UP", # pyupgrade
-    "RUF", # ruff
-    "B", # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "ISC", # flake8-implicit-str-concat
-    "PIE", # flake8-pie
-    "PT", # flake-pytest-style
-    "PTH", # flake8-use-pathlib
-    "SIM", # flake8-simplify
-    "TID", # flake8-tidy-imports
+    "F", "E", "I", "N", "UP", "RUF", "B", "C4", "ISC", "PIE",
+    "PT", "PTH", "SIM", "TID",
 ]
 ignore = []
 fixable = ["ALL"]
-extend-ignore = [
-    "RUF005",
-    "RUF012",
-]
-unfixable = [
-    "F401",
-]
+extend-ignore = ["RUF005", "RUF012"]
+unfixable = ["F401"]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.format]
@@ -317,7 +152,6 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
-
 docstring-code-format = false
 docstring-code-line-length = "dynamic"
 

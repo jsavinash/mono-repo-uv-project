@@ -52,7 +52,12 @@ app.add_middleware(RateLimitMiddleware)
 # Mount static files
 BASE_DIR = Path(__file__).resolve().parent
 STATIC_DIR = BASE_DIR / "static"
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+if STATIC_DIR.exists():
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+else:
+    logger.warning(
+        "Static directory %s does not exist; skipping static files mount.", STATIC_DIR
+    )
 
 # Include API router
 # app.include_router(api_router, prefix=settings.API_V1_STR)
