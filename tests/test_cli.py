@@ -1,9 +1,7 @@
 from contextlib import redirect_stdout
 from io import StringIO
 
-
-def print_anything() -> None:
-    print("Hello from core packages")
+from core import printAnything
 
 
 def test_main() -> None:
@@ -11,6 +9,6 @@ def test_main() -> None:
 
     buffer = StringIO()
     with redirect_stdout(buffer):
-        print_anything()
+        printAnything()
 
     assert buffer.getvalue().strip() == "Hello from core packages"

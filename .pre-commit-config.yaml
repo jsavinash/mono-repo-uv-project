@@ -1,34 +1,59 @@
-repos:
-  - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.9.27
-    hooks:
-      - id: uv-lock
+# ═══════════════════════════════════════════════════════════════
+# Pre-commit hooks for Python Monorepo
+# ═══════════════════════════════════════════════════════════════
+# Install: pre-commit install
+# Run all: pre-commit run --all-files
+# ═══════════════════════════════════════════════════════════════
 
-  - repo: local
+repos:
+  # ─── Ruff (Linter & Formatter) ──────────────────────────
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.11
     hooks:
       - id: ruff
-        name: ruff
-        entry: /opt/homebrew/bin/python3 -m ruff check --fix main.py tests/test_main.py tests/test_cli.py
-        language: system
-        pass_filenames: false
+        name: ruff lint
+        args: [--fix, --exit-non-zero-on-fix]
+        types_or: [python, pyi]
       - id: ruff-format
-        name: ruff-format
-        entry: /opt/homebrew/bin/python3 -m ruff format main.py tests/test_main.py tests/test_cli.py
-        language: system
-        pass_filenames: false
+        name: ruff format
+        types_or: [python, pyi]
 
+  # ─── General Quality Checks ─────────────────────────────
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
+        name: trim trailing whitespace
       - id: end-of-file-fixer
+        name: fix end of files
+      - id: check-yaml
+        name: check YAML
+        args: [--allow-multiple-documents]
+      - id: check-toml
+        name: check TOML
+      - id: check-json
+        name: check JSON
+      - id: check-added-large-files
+        name: check large files
+        args: [--maxkb=500]
       - id: check-merge-conflict
+        name: check merge conflicts
+      - id: detect-private-key
+        name: detect private keys
+      - id: check-case-conflict
+        name: check case conflict
+      - id: check-symlinks
+        name: check symlinks
+      - id: destroyed-symlinks
+        name: check destroyed symlinks
       - id: mixed-line-ending
+        name: normalize line endings
+        args: [--fix=lf]
 
-  - repo: local
+  # ─── Commit Message Format ──────────────────────────────
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.8.2
     hooks:
-      - id: pytest-smoke
-        name: pytest-smoke
-        entry: /opt/homebrew/bin/python3 -m pytest -q tests/test_main.py tests/test_cli.py
-        language: system
-        pass_filenames: false
+      - id: commitizen
+        name: check commit message
+        stages: [commit-msg]
