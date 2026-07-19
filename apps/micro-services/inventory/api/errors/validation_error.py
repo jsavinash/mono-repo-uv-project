@@ -11,7 +11,7 @@ from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
 async def http422_error_handler(
     _: Request,
-    exc: Union[RequestValidationError, ValidationError],
+    exc: RequestValidationError | ValidationError,
 ) -> JSONResponse:
     return JSONResponse(
         {"errors": exc.errors()},
@@ -23,6 +23,6 @@ validation_error_response_definition["properties"] = {
     "errors": {
         "title": "Errors",
         "type": "array",
-        "items": {"$ref": "{0}ValidationError".format(REF_PREFIX)},
+        "items": {"$ref": f"{REF_PREFIX}ValidationError"},
     },
 }

@@ -1,6 +1,7 @@
+from collections import Counter
+
 import matplotlib.pyplot as plt
 import numpy as np
-from collections import Counter
 
 
 def rolling_dics_bar_plot():

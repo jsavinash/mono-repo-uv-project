@@ -18,9 +18,9 @@ from starlette import status
 
 
 def get_articles_filters(
-    tag: Optional[str] = None,
-    author: Optional[str] = None,
-    favorited: Optional[str] = None,
+    tag: str | None = None,
+    author: str | None = None,
+    favorited: str | None = None,
     limit: int = Query(DEFAULT_ARTICLES_LIMIT, ge=1),
     offset: int = Query(DEFAULT_ARTICLES_OFFSET, ge=0),
 ) -> ArticlesFilters:
@@ -35,7 +35,7 @@ def get_articles_filters(
 
 async def get_article_by_slug_from_path(
     slug: str = Path(..., min_length=1),
-    user: Optional[User] = Depends(get_current_user_authorizer(required=False)),
+    user: User | None = Depends(get_current_user_authorizer(required=False)),
     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),
 ) -> Article:
     try:

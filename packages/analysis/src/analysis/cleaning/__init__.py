@@ -6,8 +6,8 @@ from analysis.cleaning.missing import MissingValueHandler
 from analysis.cleaning.outliers import OutlierDetector
 
 __all__: list[str] = [
+    "DuplicateHandler",
     "MissingValueHandler",
     "OutlierDetector",
-    "DuplicateHandler",
     "TypeCoercer",
 ]

@@ -44,7 +44,7 @@ class TypeCoercer(BaseTransformer):
         self._coercion_report: dict[str, dict[str, Any]] = {}
         self._last_result: CleaningResult | None = None
 
-    def fit(self, df: pd.DataFrame) -> "TypeCoercer":
+    def fit(self, df: pd.DataFrame) -> TypeCoercer:
         """Validate that all schema columns exist in the DataFrame."""
         missing = set(self._schema) - set(df.columns)
         if missing:
@@ -89,7 +89,9 @@ class TypeCoercer(BaseTransformer):
                 else:
                     result[col] = result[col].astype(target_dtype)
 
-                nulls_after = int(result[col].isnull().sum()) - int(df[col].isnull().sum())
+                nulls_after = int(result[col].isnull().sum()) - int(
+                    df[col].isnull().sum()
+                )
                 self._coercion_report[col] = {
                     "from": current_dtype,
                     "to": target_dtype,
@@ -102,7 +104,11 @@ class TypeCoercer(BaseTransformer):
                 if self._errors == "raise":
                     raise DataValidationError(
                         f"Cannot coerce column '{col}' from {current_dtype} to {target_dtype}: {exc}",
-                        details={"column": col, "from": current_dtype, "to": target_dtype},
+                        details={
+                            "column": col,
+                            "from": current_dtype,
+                            "to": target_dtype,
+                        },
                     ) from exc
                 self._coercion_report[col] = {
                     "from": current_dtype,

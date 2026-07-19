@@ -1,15 +1,16 @@
-from typing import Optional, Type
-from types import TracebackType
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Iterator
+from types import TracebackType
+from typing import Optional, Type
 
-#1. Class-Based Context Manager (with Type Hints) 
+
+# 1. Class-Based Context Manager (with Type Hints)
 class MyTimer:
     """A context manager to measure the execution time of a code block."""
 
     def __init__(self) -> None:
-        self.start_time: Optional[float] = None
-        self.end_time: Optional[float] = None
+        self.start_time: float | None = None
+        self.end_time: float | None = None
 
     def __enter__(self) -> "MyTimer":
         """Called when execution enters the context."""
@@ -20,10 +21,10 @@ class MyTimer:
 
     def __exit__(
         self,
-        exc_type: Optional[Type[BaseException]],
-        exc_value: Optional[BaseException],
-        traceback: Optional[TracebackType],
-    ) -> Optional[bool]:
+        exc_type: type[BaseException] | None,
+        exc_value: BaseException | None,
+        traceback: TracebackType | None,
+    ) -> bool | None:
         """Called when execution leaves the context, handles cleanup."""
         import time
 
@@ -44,19 +45,20 @@ with MyTimer() as timer:
     for _ in range(1000000000):
         pass
 
-#2. Generator-Based Context Manager (with Type Hints)
-from contextlib import contextmanager
-from typing import Iterator
+# 2. Generator-Based Context Manager (with Type Hints)
+
 
 @contextmanager
 def simple_timer(label: str) -> Iterator[None]:
     import time
+
     start = time.perf_counter()
     try:
         yield
     finally:
         end = time.perf_counter()
         print(f"{label}: {end - start:.4f}s")
+
 
 with simple_timer("Task A"):
     # Simulated work

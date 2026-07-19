@@ -4,6 +4,7 @@ Product Model
 
 from datetime import datetime
 
+from item.app.db.database import Base
 from sqlalchemy import (
     Boolean,
     Column,
@@ -16,8 +17,6 @@ from sqlalchemy import (
     Text,
 )
 from sqlalchemy.orm import relationship
-
-from item.app.db.database import Base
 
 # Association table for product categories
 product_categories = Table(

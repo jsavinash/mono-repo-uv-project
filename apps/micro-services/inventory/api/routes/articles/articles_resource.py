@@ -29,7 +29,7 @@ router = APIRouter()
 @router.get("", response_model=ListOfArticlesInResponse, name="articles:list-articles")
 async def list_articles(
     articles_filters: ArticlesFilters = Depends(get_articles_filters),
-    user: Optional[User] = Depends(get_current_user_authorizer(required=False)),
+    user: User | None = Depends(get_current_user_authorizer(required=False)),
     articles_repo: ArticlesRepository = Depends(get_repository(ArticlesRepository)),
 ) -> ListOfArticlesInResponse:
     articles = await articles_repo.filter_articles(

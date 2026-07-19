@@ -5,9 +5,8 @@ Redis Cache Configuration
 import json
 from typing import Any, Optional
 
-import redis
-
 from item.app.core.config.settings import settings
+import redis
 
 # Redis client
 redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
@@ -20,7 +19,7 @@ class RedisCache:
         self.client = redis_client
         self.default_ttl = settings.REDIS_CACHE_TTL
 
-    async def get(self, key: str) -> Optional[Any]:
+    async def get(self, key: str) -> Any | None:
         """Get value from cache"""
         try:
             value = self.client.get(key)
@@ -31,7 +30,7 @@ class RedisCache:
             print(f"Redis get error: {e}")
             return None
 
-    async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
+    async def set(self, key: str, value: Any, ttl: int | None = None) -> bool:
         """Set value in cache"""
         try:
             ttl = ttl or self.default_ttl

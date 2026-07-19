@@ -2,7 +2,7 @@ from typing import override
 
 """
 * Class is a logical entity.
-* A class can also be defined as a blueprint from which we can create an individual object. 
+* A class can also be defined as a blueprint from which we can create an individual object.
 * Class does not consume any space.
 """
 

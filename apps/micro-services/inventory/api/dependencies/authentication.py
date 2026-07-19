@@ -1,5 +1,5 @@
-# noqa:WPS201
-from typing import Callable, Optional
+from collections.abc import Callable
+from typing import Optional
 
 from fastapi import Depends, HTTPException, Security
 from fastapi.security import APIKeyHeader
@@ -18,10 +18,10 @@ HEADER_KEY = "Authorization"
 
 
 class RWAPIKeyHeader(APIKeyHeader):
-    async def __call__(  # noqa: WPS610
+    async def __call__(
         self,
         request: requests.Request,
-    ) -> Optional[str]:
+    ) -> str | None:
         try:
             return await super().__call__(request)
         except StarletteHTTPException as original_auth_exc:
@@ -63,7 +63,7 @@ def _get_authorization_header(
 
 
 def _get_authorization_header_optional(
-    authorization: Optional[str] = Security(
+    authorization: str | None = Security(
         RWAPIKeyHeader(name=HEADER_KEY, auto_error=False),
     ),
     settings: AppSettings = Depends(get_app_settings),
@@ -103,7 +103,7 @@ async def _get_current_user_optional(
     repo: UsersRepository = Depends(get_repository(UsersRepository)),
     token: str = Depends(_get_authorization_header_retriever(required=False)),
     settings: AppSettings = Depends(get_app_settings),
-) -> Optional[User]:
+) -> User | None:
     if token:
         return await _get_current_user(repo, token, settings)
 

@@ -5,6 +5,7 @@ Order and Cart Models
 from datetime import datetime
 import enum
 
+from item.app.db.database import Base
 from sqlalchemy import (
     Boolean,
     Column,
@@ -17,8 +18,6 @@ from sqlalchemy import (
     Text,
 )
 from sqlalchemy.orm import relationship
-
-from item.app.db.database import Base
 
 
 class OrderStatus(str, enum.Enum):

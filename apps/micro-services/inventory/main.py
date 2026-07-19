@@ -1,15 +1,14 @@
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
-from starlette.exceptions import HTTPException
-from starlette.middleware.cors import CORSMiddleware
-from typer import Typer
-import uvicorn
-
 from inventory.api.errors.http_error import http_error_handler
 from inventory.api.errors.validation_error import http422_error_handler
 from inventory.api.routes.api import router as api_router
 from inventory.core.config import get_app_settings
 from inventory.core.events import create_start_app_handler, create_stop_app_handler
+from starlette.exceptions import HTTPException
+from starlette.middleware.cors import CORSMiddleware
+from typer import Typer
+import uvicorn
 
 
 def get_application() -> FastAPI:

@@ -13,14 +13,12 @@ class CategoryBase(BaseModel):
 
     name: str
     slug: str
-    description: Optional[str] = None
-    parent_id: Optional[int] = None
+    description: str | None = None
+    parent_id: int | None = None
 
 
 class CategoryCreate(CategoryBase):
     """Schema for creating category"""
-
-    pass
 
 
 class CategoryResponse(CategoryBase):
@@ -38,7 +36,7 @@ class ProductImageBase(BaseModel):
     """Base product image schema"""
 
     image_url: str
-    alt_text: Optional[str] = None
+    alt_text: str | None = None
     is_primary: bool = False
 
 
@@ -57,19 +55,19 @@ class ProductBase(BaseModel):
 
     name: str = Field(..., min_length=1, max_length=200)
     slug: str
-    description: Optional[str] = None
-    short_description: Optional[str] = None
+    description: str | None = None
+    short_description: str | None = None
     sku: str
     price: float = Field(..., gt=0)
-    compare_price: Optional[float] = None
+    compare_price: float | None = None
     stock_quantity: int = Field(..., ge=0)
-    brand: Optional[str] = None
+    brand: str | None = None
 
 
 class ProductCreate(ProductBase):
     """Schema for creating product"""
 
-    category_ids: List[int] = []
+    category_ids: list[int] = []
 
     @validator("compare_price")
     def validate_compare_price(cls, v, values):
@@ -81,11 +79,11 @@ class ProductCreate(ProductBase):
 class ProductUpdate(BaseModel):
     """Schema for updating product"""
 
-    name: Optional[str] = None
-    description: Optional[str] = None
-    price: Optional[float] = Field(None, gt=0)
-    stock_quantity: Optional[int] = Field(None, ge=0)
-    is_active: Optional[bool] = None
+    name: str | None = None
+    description: str | None = None
+    price: float | None = Field(None, gt=0)
+    stock_quantity: int | None = Field(None, ge=0)
+    is_active: bool | None = None
 
 
 class ProductResponse(ProductBase):
@@ -96,8 +94,8 @@ class ProductResponse(ProductBase):
     is_featured: bool
     created_at: datetime
     updated_at: datetime
-    categories: List[CategoryResponse] = []
-    images: List[ProductImageResponse] = []
+    categories: list[CategoryResponse] = []
+    images: list[ProductImageResponse] = []
 
     class Config:
         from_attributes = True
@@ -106,7 +104,7 @@ class ProductResponse(ProductBase):
 class ProductListResponse(BaseModel):
     """Schema for paginated product list"""
 
-    items: List[ProductResponse]
+    items: list[ProductResponse]
     total: int
     page: int
     page_size: int

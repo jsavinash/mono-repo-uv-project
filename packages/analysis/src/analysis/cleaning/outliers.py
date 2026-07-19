@@ -67,11 +67,16 @@ class OutlierDetector(BaseTransformer):
 
     @staticmethod
     def _default_threshold(method: str) -> float:
-        return {"iqr": 1.5, "zscore": 3.0, "modified_zscore": 3.5, "isolation_forest": 0.05}[method]
+        return {
+            "iqr": 1.5,
+            "zscore": 3.0,
+            "modified_zscore": 3.5,
+            "isolation_forest": 0.05,
+        }[method]
 
     # -- Fit ----------------------------------------------------------------
 
-    def fit(self, df: pd.DataFrame) -> "OutlierDetector":
+    def fit(self, df: pd.DataFrame) -> OutlierDetector:
         """Learn bounds / parameters from the data."""
         cols = self._resolve_columns(df)
         for col in cols:
@@ -79,11 +84,17 @@ class OutlierDetector(BaseTransformer):
             if self._method == "iqr":
                 q1, q3 = float(series.quantile(0.25)), float(series.quantile(0.75))
                 iqr = q3 - q1
-                self._bounds[col] = (q1 - self._threshold * iqr, q3 + self._threshold * iqr)
+                self._bounds[col] = (
+                    q1 - self._threshold * iqr,
+                    q3 + self._threshold * iqr,
+                )
             elif self._method in ("zscore", "modified_zscore"):
                 if self._method == "zscore":
                     mean, std = float(series.mean()), float(series.std())
-                    self._bounds[col] = (mean - self._threshold * std, mean + self._threshold * std)
+                    self._bounds[col] = (
+                        mean - self._threshold * std,
+                        mean + self._threshold * std,
+                    )
                 else:
                     median = float(series.median())
                     mad = float(np.median(np.abs(series - median)))
@@ -128,7 +139,9 @@ class OutlierDetector(BaseTransformer):
                     actions.append(f"Removed {n_outliers} outlier(s) in '{col}'")
                 elif self._action == "clip":
                     result[col] = result[col].clip(lower=lower, upper=upper)
-                    actions.append(f"Clipped {n_outliers} outlier(s) in '{col}' to [{lower:.2f}, {upper:.2f}]")
+                    actions.append(
+                        f"Clipped {n_outliers} outlier(s) in '{col}' to [{lower:.2f}, {upper:.2f}]"
+                    )
                 elif self._action == "transform":
                     result[col] = np.log1p(result[col].clip(lower=0))
                     actions.append(f"Log-transformed '{col}' ({n_outliers} outlier(s))")
@@ -162,7 +175,9 @@ class OutlierDetector(BaseTransformer):
             df.loc[outlier_mask.index, "is_outlier"] = outlier_mask
             actions.append(f"Flagged {n_outliers} outlier(s) via Isolation Forest")
         elif self._action == "remove":
-            df = df.loc[~outlier_mask.reindex(df.index, fill_value=False)].reset_index(drop=True)
+            df = df.loc[~outlier_mask.reindex(df.index, fill_value=False)].reset_index(
+                drop=True
+            )
             actions.append(f"Removed {n_outliers} outlier(s) via Isolation Forest")
 
         return df, actions

@@ -13,7 +13,7 @@ from starlette.status import HTTP_404_NOT_FOUND
 
 async def get_profile_by_username_from_path(
     username: str = Path(..., min_length=1),
-    user: Optional[User] = Depends(get_current_user_authorizer(required=False)),
+    user: User | None = Depends(get_current_user_authorizer(required=False)),
     profiles_repo: ProfilesRepository = Depends(get_repository(ProfilesRepository)),
 ) -> Profile:
     try:

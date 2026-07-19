@@ -5,10 +5,9 @@ User Model
 from datetime import datetime
 import enum
 
+from item.app.db.database import Base
 from sqlalchemy import Boolean, Column, DateTime, Enum, Integer, String
 from sqlalchemy.orm import relationship
-
-from item.app.db.database import Base
 
 
 class UserRole(str, enum.Enum):

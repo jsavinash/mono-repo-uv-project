@@ -30,7 +30,7 @@ class BaseAnalyzer(ABC):
         self._is_fitted: bool = False
 
     @abstractmethod
-    def fit(self, df: pd.DataFrame) -> "BaseAnalyzer":
+    def fit(self, df: pd.DataFrame) -> BaseAnalyzer:
         """Learn parameters from the data.
 
         Args:
@@ -79,7 +79,7 @@ class BaseTransformer(ABC):
         self._is_fitted: bool = False
 
     @abstractmethod
-    def fit(self, df: pd.DataFrame) -> "BaseTransformer":
+    def fit(self, df: pd.DataFrame) -> BaseTransformer:
         """Learn parameters from the data.
 
         Args:
@@ -131,7 +131,7 @@ class BasePipeline(ABC):
         self,
         name: str,
         step: BaseAnalyzer | BaseTransformer,
-    ) -> "BasePipeline":
+    ) -> BasePipeline:
         """Add a named step to the pipeline.
 
         Args:

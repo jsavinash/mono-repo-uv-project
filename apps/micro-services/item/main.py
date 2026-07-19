@@ -9,14 +9,13 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from prometheus_client import make_asgi_app
-from typer import Typer
-
 from item.app.core.config.settings import settings
 
 # from item.app.db.database import engine, Base
 from item.app.middleware.logging import LoggingMiddleware
 from item.app.middleware.rate_limit import RateLimitMiddleware
+from prometheus_client import make_asgi_app
+from typer import Typer
 
 # Configure logging
 logging.basicConfig(

@@ -43,7 +43,7 @@ class DataProfiler(BaseAnalyzer):
         self._correlation_method = correlation_method
         self._percentiles = percentiles or [0.25, 0.5, 0.75]
 
-    def fit(self, df: pd.DataFrame) -> "DataProfiler":
+    def fit(self, df: pd.DataFrame) -> DataProfiler:
         """No learned state needed — returns self."""
         self._is_fitted = True
         return self
@@ -82,9 +82,7 @@ class DataProfiler(BaseAnalyzer):
             memory_usage=df.memory_usage(deep=True).to_dict(),
             constant_columns=unique_counts[unique_counts <= 1].index.tolist(),
             high_cardinality=[
-                col
-                for col in df.columns
-                if unique_counts[col] / max(len(df), 1) > 0.9
+                col for col in df.columns if unique_counts[col] / max(len(df), 1) > 0.9
             ],
         )
 

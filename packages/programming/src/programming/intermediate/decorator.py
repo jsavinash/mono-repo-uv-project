@@ -1,5 +1,6 @@
+from collections.abc import Callable
 import functools
-from typing import Callable, TypeVar, ParamSpec
+from typing import ParamSpec, TypeVar
 
 # Define TypeVars for the function's parameters and return type
 P = ParamSpec("P")
@@ -26,6 +27,7 @@ def uppercase_decorator(func: Callable[P, T]) -> Callable[P, str]:
 
     return wrapper
 
+
 @uppercase_decorator
 def greet(name: str) -> str:
     """Returns a greeting string."""
@@ -36,6 +38,7 @@ def greet(name: str) -> str:
 def say_hello() -> str:
     """Returns a simple hello."""
     return "hello, world!"
+
 
 # Example usage
 print(greet("Alice"))

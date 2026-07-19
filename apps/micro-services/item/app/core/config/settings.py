@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
     # CORS
-    CORS_ORIGINS: List[str] = [
+    CORS_ORIGINS: list[str] = [
         "http://localhost:3000",
         "http://localhost:8000",
         "http://localhost:5173",
@@ -56,8 +56,8 @@ class Settings(BaseSettings):
     STRIPE_WEBHOOK_SECRET: str = "whsec_your_webhook_secret"
 
     # AWS S3 (for file storage)
-    AWS_ACCESS_KEY_ID: Optional[str] = None
-    AWS_SECRET_ACCESS_KEY: Optional[str] = None
+    AWS_ACCESS_KEY_ID: str | None = None
+    AWS_SECRET_ACCESS_KEY: str | None = None
     AWS_REGION: str = "us-east-1"
     AWS_S3_BUCKET: str = "ecommerce-uploads"
 
@@ -75,20 +75,20 @@ class Settings(BaseSettings):
 
     # File Upload
     MAX_UPLOAD_SIZE: int = 10 * 1024 * 1024  # 10MB
-    ALLOWED_IMAGE_TYPES: List[str] = ["image/jpeg", "image/png", "image/webp"]
+    ALLOWED_IMAGE_TYPES: list[str] = ["image/jpeg", "image/png", "image/webp"]
 
     # Cache
     CACHE_ENABLED: bool = True
 
     # Monitoring
-    SENTRY_DSN: Optional[str] = None
+    SENTRY_DSN: str | None = None
 
     class Config:
         env_file = ".env"
         case_sensitive = True
 
 
-@lru_cache()
+@lru_cache
 def get_settings() -> Settings:
     """Get cached settings instance"""
     return Settings()

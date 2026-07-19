@@ -5,8 +5,6 @@ Authentication Endpoints
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-
 from item.app.core.security.auth import (
     create_access_token,
     create_refresh_token,
@@ -16,6 +14,7 @@ from item.app.core.security.auth import (
 from item.app.db.database import get_db
 from item.app.models.user import User
 from item.app.schemas.user import Token, UserCreate, UserLogin, UserResponse
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 

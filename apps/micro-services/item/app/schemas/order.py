@@ -5,9 +5,8 @@ Order and Cart Schemas
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
-
 from item.app.models.order import OrderStatus, PaymentStatus
+from pydantic import BaseModel, Field
 
 
 class AddressBase(BaseModel):
@@ -16,7 +15,7 @@ class AddressBase(BaseModel):
     full_name: str
     phone_number: str
     address_line1: str
-    address_line2: Optional[str] = None
+    address_line2: str | None = None
     city: str
     state: str
     postal_code: str
@@ -26,8 +25,6 @@ class AddressBase(BaseModel):
 
 class AddressCreate(AddressBase):
     """Schema for creating address"""
-
-    pass
 
 
 class AddressResponse(AddressBase):
@@ -49,8 +46,6 @@ class CartItemBase(BaseModel):
 
 class CartItemCreate(CartItemBase):
     """Schema for adding to cart"""
-
-    pass
 
 
 class CartItemUpdate(BaseModel):
@@ -91,9 +86,9 @@ class OrderCreate(BaseModel):
     """Schema for creating order"""
 
     shipping_address_id: int
-    billing_address_id: Optional[int] = None
+    billing_address_id: int | None = None
     payment_method: str
-    notes: Optional[str] = None
+    notes: str | None = None
 
 
 class OrderResponse(BaseModel):
@@ -109,8 +104,8 @@ class OrderResponse(BaseModel):
     discount: float
     total: float
     created_at: datetime
-    items: List[OrderItemResponse] = []
-    shipping_address: Optional[AddressResponse] = None
+    items: list[OrderItemResponse] = []
+    shipping_address: AddressResponse | None = None
 
     class Config:
         from_attributes = True
@@ -119,7 +114,7 @@ class OrderResponse(BaseModel):
 class OrderListResponse(BaseModel):
     """Schema for paginated order list"""
 
-    items: List[OrderResponse]
+    items: list[OrderResponse]
     total: int
     page: int
     page_size: int

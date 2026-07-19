@@ -3,7 +3,6 @@ Email Tasks
 """
 
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema
-
 from item.app.core.config.settings import settings
 from item.app.tasks.celery_app import celery_app
 

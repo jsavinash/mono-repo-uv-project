@@ -1,4 +1,4 @@
-from typing import Generator
+from collections.abc import Generator
 
 
 def count_up_to(max_value: int) -> Generator[int, None, None]:

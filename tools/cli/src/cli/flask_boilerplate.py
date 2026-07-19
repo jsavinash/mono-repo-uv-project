@@ -34,9 +34,9 @@ def regex_validator(value: str) -> str:
 
 @app.command()
 def main(n: Annotated[str, Argument(help="Path to service API folder")]) -> None:
-    Console().print(f"********** Flask cli execution **********")
+    Console().print("********** Flask cli execution **********")
     create_flask_app_folder_structure(n)
-    Console().print(f"********** Complete **********")
+    Console().print("********** Complete **********")
 
 
 # Allow the script to be run standalone (useful during development).
@@ -88,7 +88,6 @@ def create_flask_app_folder_structure(targetFolderPath):
             os.path.getsize(f"{targetFolderPath}{file_path}") == 0
         ):
             with open(f"{targetFolderPath}{file_path}", "w+") as f:
-                pass
                 print(f"Creating an empty file: {file_path}")
         else:
             print(f"File already exists {file_path}")

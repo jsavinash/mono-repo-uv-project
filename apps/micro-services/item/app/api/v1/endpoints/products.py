@@ -6,12 +6,11 @@ import math
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
-from sqlalchemy.orm import Session
-
 from item.app.core.security.auth import get_current_active_admin
 from item.app.db.database import get_db
 from item.app.models.product import Category, Product
 from item.app.schemas.product import ProductCreate, ProductListResponse, ProductResponse
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -20,8 +19,8 @@ router = APIRouter()
 async def get_products(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
-    category_id: Optional[int] = None,
-    search: Optional[str] = None,
+    category_id: int | None = None,
+    search: str | None = None,
     db: Session = Depends(get_db),
 ):
     """Get all products with pagination"""

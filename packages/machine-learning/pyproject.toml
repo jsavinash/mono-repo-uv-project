@@ -24,7 +24,7 @@ simple_linear_regression = "machine_learning.supervised_learning.regression.line
 executor.type = "uv"
 
 [tool.poe.tasks]
-linear_regression = "python ./src/machine_learning/supervised_learning/regression/linear_regression.py" 
+linear_regression = "python ./src/machine_learning/supervised_learning/regression/linear_regression.py"
 
 [build-system]
 requires = ["uv_build>=0.9.27,<0.10.0"]

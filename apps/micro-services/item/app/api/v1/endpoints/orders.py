@@ -6,13 +6,12 @@ from typing import List
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-
 from item.app.core.security.auth import get_current_user
 from item.app.db.database import get_db
 from item.app.models.order import CartItem, Order, OrderItem, OrderStatus
 from item.app.models.user import User
 from item.app.schemas.order import OrderCreate, OrderResponse
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -96,7 +95,7 @@ async def create_order(
     return new_order
 
 
-@router.get("", response_model=List[OrderResponse])
+@router.get("", response_model=list[OrderResponse])
 async def get_my_orders(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):

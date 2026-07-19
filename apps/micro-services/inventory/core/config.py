@@ -7,7 +7,7 @@ from item.src.core.settings.development import DevAppSettings
 from item.src.core.settings.production import ProdAppSettings
 from item.src.core.settings.test import TestAppSettings
 
-environments: Dict[AppEnvTypes, Type[AppSettings]] = {
+environments: dict[AppEnvTypes, type[AppSettings]] = {
     AppEnvTypes.dev: DevAppSettings,
     AppEnvTypes.prod: ProdAppSettings,
     AppEnvTypes.test: TestAppSettings,

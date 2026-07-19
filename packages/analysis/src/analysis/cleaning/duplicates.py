@@ -37,16 +37,20 @@ class DuplicateHandler(BaseTransformer):
         self._duplicate_count: int = 0
         self._last_result: CleaningResult | None = None
 
-    def fit(self, df: pd.DataFrame) -> "DuplicateHandler":
+    def fit(self, df: pd.DataFrame) -> DuplicateHandler:
         """Count duplicates (no learned state needed)."""
-        self._duplicate_count = int(df.duplicated(subset=self._subset, keep=self._keep).sum())
+        self._duplicate_count = int(
+            df.duplicated(subset=self._subset, keep=self._keep).sum()
+        )
         self._is_fitted = True
         return self
 
     def transform(self, df: pd.DataFrame) -> pd.DataFrame:
         """Remove duplicate rows."""
         original_shape = df.shape
-        result = df.drop_duplicates(subset=self._subset, keep=self._keep).reset_index(drop=True)
+        result = df.drop_duplicates(subset=self._subset, keep=self._keep).reset_index(
+            drop=True
+        )
 
         rows_removed = original_shape[0] - result.shape[0]
         self._last_result = CleaningResult(
@@ -54,7 +58,9 @@ class DuplicateHandler(BaseTransformer):
             cleaned_shape=result.shape,
             rows_removed=rows_removed,
             columns_modified=self._subset or list(df.columns),
-            actions_taken=[f"Removed {rows_removed} duplicate row(s)"] if rows_removed else [],
+            actions_taken=[f"Removed {rows_removed} duplicate row(s)"]
+            if rows_removed
+            else [],
         )
         return result
 

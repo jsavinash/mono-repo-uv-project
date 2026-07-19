@@ -86,7 +86,9 @@ class Visualizer:
         elif kind == "box":
             sns.boxplot(x=data, ax=ax)
 
-        ax.set_title(title or f"Distribution of {column}", fontsize=14, fontweight="bold")
+        ax.set_title(
+            title or f"Distribution of {column}", fontsize=14, fontweight="bold"
+        )
         ax.set_xlabel(column)
         fig.tight_layout()
         return fig

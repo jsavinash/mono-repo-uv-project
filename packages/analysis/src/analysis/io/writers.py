@@ -16,10 +16,10 @@ from analysis.core.exceptions import ConfigurationError, DataIOError
 # ---------------------------------------------------------------------------
 # Registry
 # ---------------------------------------------------------------------------
-_WRITER_REGISTRY: dict[str, type["_BaseWriter"]] = {}
+_WRITER_REGISTRY: dict[str, type[_BaseWriter]] = {}
 
 
-def _register(ext: str):  # noqa: ANN202
+def _register(ext: str):
     def decorator(cls: type[_BaseWriter]) -> type[_BaseWriter]:
         _WRITER_REGISTRY[ext] = cls
         return cls

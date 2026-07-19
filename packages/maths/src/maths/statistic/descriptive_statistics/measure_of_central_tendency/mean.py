@@ -1,5 +1,6 @@
-import matplotlib.pyplot as plt
 import statistics
+
+import matplotlib.pyplot as plt
 
 
 def student_mean_plot():
@@ -11,7 +12,7 @@ def student_mean_plot():
     median_age = statistics.median(ages)
     mode_age = statistics.mode(ages)
 
-    print(f"Student Age Statistics:")
+    print("Student Age Statistics:")
     print(f"Mean: {mean_age:.2f}")
     print(f"Median: {median_age}")
     print(f"Mode: {mode_age}")

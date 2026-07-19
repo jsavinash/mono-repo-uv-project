@@ -1,5 +1,6 @@
-import matplotlib.pyplot as plt
 import statistics
+
+import matplotlib.pyplot as plt
 
 
 def plot_measure_of_central_tendency():
@@ -11,7 +12,7 @@ def plot_measure_of_central_tendency():
     median_age = statistics.median(ages)
     mode_age = statistics.mode(ages)
 
-    print(f"Student Age Statistics:")
+    print("Student Age Statistics:")
     print(f"Mean: {mean_age:.2f}")
     print(f"Median: {median_age}")
     print(f"Mode: {mode_age}")

@@ -1,4 +1,5 @@
-from typing import AsyncGenerator, Callable, Type
+from collections.abc import AsyncGenerator, Callable
+from typing import Type
 
 from asyncpg.connection import Connection
 from asyncpg.pool import Pool
@@ -19,7 +20,7 @@ async def _get_connection_from_pool(
 
 
 def get_repository(
-    repo_type: Type[BaseRepository],
+    repo_type: type[BaseRepository],
 ) -> Callable[[Connection], BaseRepository]:
     def _get_repo(
         conn: Connection = Depends(_get_connection_from_pool),

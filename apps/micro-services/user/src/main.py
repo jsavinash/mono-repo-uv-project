@@ -1,11 +1,10 @@
 from flask import Flask
 from typer import Typer
-from werkzeug.debug import DebuggedApplication
-from werkzeug.middleware.proxy_fix import ProxyFix
-
 import user.src.config.settings as settings
 from user.src.extensions import db, debug_toolbar, flask_static_digest
 from user.src.user.views import user_pb
+from werkzeug.debug import DebuggedApplication
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 
 def create_app(settings_override=None):

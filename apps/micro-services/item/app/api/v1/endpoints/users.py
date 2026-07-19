@@ -3,12 +3,11 @@ User Endpoints
 """
 
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-
 from item.app.core.security.auth import get_current_user
 from item.app.db.database import get_db
 from item.app.models.user import User
 from item.app.schemas.user import UserResponse, UserUpdate
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 

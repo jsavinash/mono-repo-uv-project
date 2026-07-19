@@ -27,16 +27,16 @@ class AppSettings(BaseAppSettings):
 
     jwt_token_prefix: str = "Token"
 
-    allowed_hosts: List[str] = ["*"]
+    allowed_hosts: list[str] = ["*"]
 
     logging_level: int = logging.INFO
-    loggers: Tuple[str, str] = ("uvicorn.asgi", "uvicorn.access")
+    loggers: tuple[str, str] = ("uvicorn.asgi", "uvicorn.access")
 
     class Config:
         validate_assignment = True
 
     @property
-    def fastapi_kwargs(self) -> Dict[str, Any]:
+    def fastapi_kwargs(self) -> dict[str, Any]:
         return {
             "debug": self.debug,
             "docs_url": self.docs_url,

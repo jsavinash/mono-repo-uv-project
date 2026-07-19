@@ -6,9 +6,8 @@ Pydantic models for request/response validation
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, Field, validator
-
 from item.app.models.user import UserRole
+from pydantic import BaseModel, EmailStr, Field, validator
 
 
 class UserBase(BaseModel):
@@ -16,9 +15,9 @@ class UserBase(BaseModel):
 
     email: EmailStr
     username: str = Field(..., min_length=3, max_length=50)
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    phone_number: Optional[str] = None
+    first_name: str | None = None
+    last_name: str | None = None
+    phone_number: str | None = None
 
 
 class UserCreate(UserBase):
@@ -38,9 +37,9 @@ class UserCreate(UserBase):
 class UserUpdate(BaseModel):
     """Schema for user update"""
 
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    phone_number: Optional[str] = None
+    first_name: str | None = None
+    last_name: str | None = None
+    phone_number: str | None = None
 
 
 class UserLogin(BaseModel):
@@ -58,7 +57,7 @@ class UserResponse(UserBase):
     is_active: bool
     is_verified: bool
     created_at: datetime
-    last_login: Optional[datetime] = None
+    last_login: datetime | None = None
 
     class Config:
         from_attributes = True
@@ -75,5 +74,5 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     """Schema for token data"""
 
-    user_id: Optional[int] = None
-    email: Optional[str] = None
+    user_id: int | None = None
+    email: str | None = None

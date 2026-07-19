@@ -10,7 +10,9 @@ from __future__ import annotations
 class AnalysisError(Exception):
     """Base exception for all analysis-related errors."""
 
-    def __init__(self, message: str, *, details: dict[str, object] | None = None) -> None:
+    def __init__(
+        self, message: str, *, details: dict[str, object] | None = None
+    ) -> None:
         self.details = details or {}
         super().__init__(message)
 

@@ -3,11 +3,10 @@ Database Configuration
 SQLAlchemy setup with PostgreSQL
 """
 
+from item.app.core.config.settings import settings
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-from item.app.core.config.settings import settings
 
 # Create SQLAlchemy engine
 engine = create_engine(

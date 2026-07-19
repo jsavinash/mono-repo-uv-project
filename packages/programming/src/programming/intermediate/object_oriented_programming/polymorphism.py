@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
-from typing import override, overload
+from typing import overload, override
 
 """
-* If one task is performed in different ways, it is known as polymorphism. 
+* If one task is performed in different ways, it is known as polymorphism.
 * Overriding supported.
 * Overloading is not supported.
 """
@@ -15,6 +15,7 @@ class IAnimal(ABC):
     # @abstractmethod
     # def area(self) -> int: ...
 
+
 class Animal(IAnimal):
     @override
     def sound(self) -> None:
@@ -22,7 +23,7 @@ class Animal(IAnimal):
 
     # @overload
     # def area(self, width: int, height: int) -> int: ...
-    
+
     # @overload
     # def area(self, side: int) -> int: ...
 
@@ -49,7 +50,7 @@ class Cat(Animal):
 
 animal = Animal()
 # print(animal.area(5, 10)) # Output: 50
-# print(animal.area(5)) 
+# print(animal.area(5))
 dog = Dog()
 cat = Cat()
 print("Animal Executed ::")

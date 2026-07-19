@@ -15,7 +15,7 @@ from starlette import status
 async def get_comment_by_id_from_path(
     comment_id: int = Path(..., ge=1),
     article: Article = Depends(articles.get_article_by_slug_from_path),
-    user: Optional[User] = Depends(
+    user: User | None = Depends(
         authentication.get_current_user_authorizer(required=False),
     ),
     comments_repo: CommentsRepository = Depends(

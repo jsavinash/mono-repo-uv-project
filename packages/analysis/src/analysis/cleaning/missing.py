@@ -66,7 +66,7 @@ class MissingValueHandler(BaseTransformer):
 
     # -- Fit ----------------------------------------------------------------
 
-    def fit(self, df: pd.DataFrame) -> "MissingValueHandler":
+    def fit(self, df: pd.DataFrame) -> MissingValueHandler:
         """Learn fill values from the data (mean, median, mode per column)."""
         for col in df.columns:
             strategy = self._column_strategies.get(col, self._strategy)
@@ -76,9 +76,21 @@ class MissingValueHandler(BaseTransformer):
 
     def _compute_fill(self, series: pd.Series, strategy: str) -> Any:  # type: ignore[type-arg]
         if strategy == "fill_mean":
-            return series.mean() if pd.api.types.is_numeric_dtype(series) else series.mode().iloc[0] if not series.mode().empty else None
+            return (
+                series.mean()
+                if pd.api.types.is_numeric_dtype(series)
+                else series.mode().iloc[0]
+                if not series.mode().empty
+                else None
+            )
         if strategy == "fill_median":
-            return series.median() if pd.api.types.is_numeric_dtype(series) else series.mode().iloc[0] if not series.mode().empty else None
+            return (
+                series.median()
+                if pd.api.types.is_numeric_dtype(series)
+                else series.mode().iloc[0]
+                if not series.mode().empty
+                else None
+            )
         if strategy == "fill_mode":
             mode = series.mode()
             return mode.iloc[0] if not mode.empty else None
@@ -97,10 +109,14 @@ class MissingValueHandler(BaseTransformer):
         # 1. Drop columns above threshold
         if self._column_threshold is not None:
             col_null_pct = result.isnull().mean()
-            drop_cols = col_null_pct[col_null_pct > self._column_threshold].index.tolist()
+            drop_cols = col_null_pct[
+                col_null_pct > self._column_threshold
+            ].index.tolist()
             if drop_cols:
                 result = result.drop(columns=drop_cols)
-                actions.append(f"Dropped {len(drop_cols)} column(s) above {self._column_threshold:.0%} null threshold")
+                actions.append(
+                    f"Dropped {len(drop_cols)} column(s) above {self._column_threshold:.0%} null threshold"
+                )
 
         # 2. Drop rows above threshold
         if self._row_threshold is not None:
@@ -109,7 +125,9 @@ class MissingValueHandler(BaseTransformer):
             dropped = int((~mask).sum())
             result = result.loc[mask].reset_index(drop=True)
             if dropped:
-                actions.append(f"Dropped {dropped} row(s) above {self._row_threshold:.0%} null threshold")
+                actions.append(
+                    f"Dropped {dropped} row(s) above {self._row_threshold:.0%} null threshold"
+                )
 
         # 3. Apply per-column strategies
         for col in result.columns:
@@ -119,7 +137,9 @@ class MissingValueHandler(BaseTransformer):
             if strategy == "drop":
                 before = len(result)
                 result = result.dropna(subset=[col]).reset_index(drop=True)
-                actions.append(f"Dropped {before - len(result)} row(s) with null in '{col}'")
+                actions.append(
+                    f"Dropped {before - len(result)} row(s) with null in '{col}'"
+                )
             elif strategy == "interpolate":
                 result[col] = result[col].interpolate()
                 actions.append(f"Interpolated nulls in '{col}'")

@@ -16,10 +16,10 @@ from analysis.core.exceptions import ConfigurationError, DataIOError
 # ---------------------------------------------------------------------------
 # Registry of extension → reader class
 # ---------------------------------------------------------------------------
-_EXTENSION_REGISTRY: dict[str, type["_BaseReader"]] = {}
+_EXTENSION_REGISTRY: dict[str, type[_BaseReader]] = {}
 
 
-def _register(ext: str):  # noqa: ANN202
+def _register(ext: str):
     """Class decorator that registers a reader for a file extension."""
 
     def decorator(cls: type[_BaseReader]) -> type[_BaseReader]:

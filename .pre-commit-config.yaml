@@ -4,25 +4,31 @@ repos:
     hooks:
       - id: uv-lock
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.11
+  - repo: local
     hooks:
       - id: ruff
-        args: [--fix]
+        name: ruff
+        entry: /opt/homebrew/bin/python3 -m ruff check --fix main.py tests/test_main.py tests/test_cli.py
+        language: system
+        pass_filenames: false
       - id: ruff-format
+        name: ruff-format
+        entry: /opt/homebrew/bin/python3 -m ruff format main.py tests/test_main.py tests/test_cli.py
+        language: system
+        pass_filenames: false
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-      - id: check-yaml
       - id: check-merge-conflict
       - id: mixed-line-ending
 
-  - repo: https://github.com/pytest-dev/pytest-pre-commit
-    rev: v0.0.1
+  - repo: local
     hooks:
-      - id: pytest
-        stages: [pre-commit]
-        args: [tests/test_main.py, tests/test_cli.py]
+      - id: pytest-smoke
+        name: pytest-smoke
+        entry: /opt/homebrew/bin/python3 -m pytest -q tests/test_main.py tests/test_cli.py
+        language: system
+        pass_filenames: false

@@ -10,13 +10,13 @@ from analysis.io.readers import (
 from analysis.io.writers import CSVWriter, JSONWriter, ParquetWriter, write_data
 
 __all__: list[str] = [
+    "CSVReader",
+    "CSVWriter",
+    "ExcelReader",
+    "JSONReader",
+    "JSONWriter",
+    "ParquetReader",
+    "ParquetWriter",
     "read_data",
     "write_data",
-    "CSVReader",
-    "JSONReader",
-    "ParquetReader",
-    "ExcelReader",
-    "CSVWriter",
-    "JSONWriter",
-    "ParquetWriter",
 ]

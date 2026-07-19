@@ -3,7 +3,7 @@
 * and only exposing what’s necessary via access modifier.
 * Public members are variables or methods that can be accessed from anywhere inside the class, outside the class or from other modules
 * Protected members are variables or methods that are intended to be accessed only within the class and its subclasses.
-* Private members are variables or methods that cannot be accessed directly from outside the class. 
+* Private members are variables or methods that cannot be accessed directly from outside the class.
 """
 
 

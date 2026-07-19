@@ -5,19 +5,18 @@ Shopping Cart Endpoints
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-
 from item.app.core.security.auth import get_current_user
 from item.app.db.database import get_db
 from item.app.models.order import CartItem
 from item.app.models.product import Product
 from item.app.models.user import User
 from item.app.schemas.order import CartItemCreate, CartItemResponse
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
 
-@router.get("", response_model=List[CartItemResponse])
+@router.get("", response_model=list[CartItemResponse])
 async def get_cart(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):

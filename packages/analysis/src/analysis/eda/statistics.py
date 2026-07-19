@@ -49,7 +49,11 @@ class StatisticalTests:
         results: dict[str, Any] = {}
 
         # Shapiro-Wilk (limited to 5000 samples)
-        sample = clean.sample(min(5000, len(clean)), random_state=42) if len(clean) > 5000 else clean
+        sample = (
+            clean.sample(min(5000, len(clean)), random_state=42)
+            if len(clean) > 5000
+            else clean
+        )
         stat_sw, p_sw = stats.shapiro(sample)
         results["shapiro"] = {
             "statistic": float(stat_sw),
@@ -69,7 +73,11 @@ class StatisticalTests:
         # Anderson-Darling
         ad_result = stats.anderson(clean, dist="norm")
         # Use the 5% significance level index
-        sig_idx = list(ad_result.significance_level).index(5.0) if 5.0 in ad_result.significance_level else 2
+        sig_idx = (
+            list(ad_result.significance_level).index(5.0)
+            if 5.0 in ad_result.significance_level
+            else 2
+        )
         results["anderson"] = {
             "statistic": float(ad_result.statistic),
             "critical_value_5pct": float(ad_result.critical_values[sig_idx]),

@@ -1,6 +1,6 @@
 from abc import ABC
-from typing import override
 from random import randrange
+from typing import override
 
 
 # Built-in Data Types
@@ -97,7 +97,7 @@ class DataType(IDataType):
     def numericTypes(self) -> None:  # 	int, float, complex
         print(" ********************* Number *********************")
         print("int value ::", 4)
-        print("int type ::", type(4))
+        print("int type ::", int)
         """
         Int
         x = 1
@@ -105,15 +105,15 @@ class DataType(IDataType):
         z = -3255522
         """
         print("float value ::", 4.5)
-        print("float type ::", type(4.5))
-        """ 
+        print("float type ::", float)
+        """
         Float
         x = 35e3
         y = 12E4
         z = -87.7e100
         """
         print("complex value ::", 1j)
-        print("complex type ::", type(1j))
+        print("complex type ::", complex)
         """
         Complex
         x = 3+5j
@@ -513,7 +513,6 @@ class DataType(IDataType):
             print(x)
             print(type(x))
 
-
         access_or_loop_set()
         change_set()
         add_item()
@@ -525,10 +524,10 @@ class DataType(IDataType):
     def booleanType(self) -> None:  # 	bool
         print(" ********************* Boolean *********************")
         print("Value ::", True)
-        print("Type", type(True))
+        print("Type", bool)
         print(bool("Hello"))
         print(bool(15))
-        print(bool())
+        print(False)
 
     @override
     def binaryTypes(self) -> None:  # 	bytes, bytearray, memoryview

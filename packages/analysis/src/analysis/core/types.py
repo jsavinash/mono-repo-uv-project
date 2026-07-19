@@ -25,11 +25,11 @@ FilePath = NewType("FilePath", Path)
 # ---------------------------------------------------------------------------
 # Strategy literals
 # ---------------------------------------------------------------------------
-MissingStrategy: TypeAlias = (
-    str  # "drop" | "fill_mean" | "fill_median" | "fill_mode" | "fill_constant" | "interpolate"
-)
+MissingStrategy: TypeAlias = str  # "drop" | "fill_mean" | "fill_median" | "fill_mode" | "fill_constant" | "interpolate"
 
-OutlierMethod: TypeAlias = str  # "iqr" | "zscore" | "modified_zscore" | "isolation_forest"
+OutlierMethod: TypeAlias = (
+    str  # "iqr" | "zscore" | "modified_zscore" | "isolation_forest"
+)
 
 OutlierAction: TypeAlias = str  # "flag" | "remove" | "clip" | "transform"
 
@@ -37,7 +37,9 @@ EncodingStrategy: TypeAlias = str  # "label" | "onehot" | "ordinal" | "target"
 
 ScalingMethod: TypeAlias = str  # "standard" | "minmax" | "robust" | "log"
 
-SelectionMethod: TypeAlias = str  # "variance" | "correlation" | "mutual_info" | "importance"
+SelectionMethod: TypeAlias = (
+    str  # "variance" | "correlation" | "mutual_info" | "importance"
+)
 
 CorrelationMethod: TypeAlias = str  # "pearson" | "spearman" | "kendall"
 

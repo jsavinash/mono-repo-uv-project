@@ -29,7 +29,7 @@ router = APIRouter()
 )
 async def list_comments_for_article(
     article: Article = Depends(get_article_by_slug_from_path),
-    user: Optional[User] = Depends(get_current_user_authorizer(required=False)),
+    user: User | None = Depends(get_current_user_authorizer(required=False)),
     comments_repo: CommentsRepository = Depends(get_repository(CommentsRepository)),
 ) -> ListOfCommentsInResponse:
     comments = await comments_repo.get_comments_for_article(article=article, user=user)

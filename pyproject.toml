@@ -63,8 +63,8 @@ dev = [
 executor.type = "uv"
 
 [tool.poe.tasks]
-#uv run poe offers-migrate 
-offers-migrate = "python ./services/offers/manage.py migrate" 
+#uv run poe offers-migrate
+offers-migrate = "python ./services/offers/manage.py migrate"
 offers-seed = "python ./services/offers/manage.py seed"
 offers-runserver = "python ./services/offers/manage.py runserver"
 array-fixed = "python ./packages/data_structure/src/data_structure/array/size/fixed.py" #uv run poe array-fixed
@@ -144,7 +144,7 @@ requires = ["hatchling>=1.26"] # Specifies the build dependencies
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = [ 
+packages = [
     "services/api-service",
     "services/api-gateway",
     "services/config-server",
@@ -171,7 +171,7 @@ packages = [
 
 [dependency-groups]
 nox = [
-    "nox-uv", 
+    "nox-uv",
 ]
 test = [
     "pytest",

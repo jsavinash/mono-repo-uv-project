@@ -4,11 +4,11 @@ from app.models.product import Category, Product
 from app.models.user import User
 
 __all__ = [
-    "User",
-    "Product",
-    "Category",
     "Cart",
     "CartItem",
+    "Category",
     "Order",
     "OrderItem",
+    "Product",
+    "User",
 ]

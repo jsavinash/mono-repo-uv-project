@@ -3,7 +3,6 @@ API V1 Router
 """
 
 from fastapi import APIRouter
-
 from item.app.api.v1.endpoints import auth, cart, orders, products, users
 
 api_router = APIRouter()
