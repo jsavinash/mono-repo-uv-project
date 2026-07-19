@@ -1,5 +1,12 @@
-def main():
-    print("Hello from python-mono-repo-starter-kit!")
+from __future__ import annotations
+
+
+def build_welcome_message() -> str:
+    return "Hello from python-mono-repo-starter-kit!"
+
+
+def main() -> None:
+    print(build_welcome_message())
 
 
 if __name__ == "__main__":

@@ -1,2 +1,3 @@
-def main() -> None:
-    print("Hello from core!")
+from .print import printAnything
+
+__all__ = ["printAnything"]

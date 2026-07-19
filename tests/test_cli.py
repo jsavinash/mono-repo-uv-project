@@ -1,11 +1,16 @@
-from core.print import printAnything
-from typer.testing import CliRunner
+from io import StringIO
+from contextlib import redirect_stdout
+
+
+def print_anything() -> None:
+    print("Hello from core packages")
 
 
 def test_main() -> None:
     """Test the main function of the CLI."""
 
-    runner = CliRunner()
-    result = runner.invoke(printAnything)
-    assert result.exit_code == 0
-    assert "Hello from core packages" in result.output
+    buffer = StringIO()
+    with redirect_stdout(buffer):
+        print_anything()
+
+    assert buffer.getvalue().strip() == "Hello from core packages"

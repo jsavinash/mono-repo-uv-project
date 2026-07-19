@@ -1,0 +1,41 @@
+[project]
+name = "analysis"
+version = "0.1.0"
+description = "Production-grade data analysis toolkit — cleaning, EDA, feature engineering, pipelines & reporting"
+readme = "README.md"
+authors = [
+    { name = "Avinash Nishad", email = "js.avinash.nishad@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "numpy>=2.0.0",
+    "pandas>=2.2.0",
+    "matplotlib>=3.9.0",
+    "seaborn>=0.13.0",
+    "scipy>=1.14.0",
+    "scikit-learn>=1.5.0",
+    "jinja2>=3.1.6",
+    "loguru>=0.7.3",
+    "openpyxl>=3.1.0",
+    "pyarrow>=17.0.0",
+]
+
+[project.scripts]
+analysis-profile = "analysis.cli:profile_cli"
+analysis-report = "analysis.cli:report_cli"
+
+[tool.poe]
+executor.type = "uv"
+
+[tool.poe.tasks]
+analysis-profile = "python -m analysis.cli profile"
+analysis-report = "python -m analysis.cli report"
+
+[build-system]
+requires = ["uv_build>=0.9.27,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "poethepoet>=0.40.0",
+]

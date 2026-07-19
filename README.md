@@ -1,25 +1,55 @@
-## Commands
-1. uv init 
-uv init services/api-service --app
-uv init services/api-gateway --app
-uv init services/config-server --app
-uv init services/service-discovery --app
-uv init services/user --app
-uv init services/item --app
-uv init services/item-management --app
-uv init services/product --app
-uv init services/review-and-ratings --app
-uv init services/inventory --app
-uv init services/recommendations --app
-uv init services/offers --app
-uv init services/cart --app
-uv init services/order --app
-uv init services/archival --app
-uv init services/notification --app
-uv init services/serviceability --app
-uv init services/payment --app
+# Mono Repo UV Project
 
-uv init libs/shared --lib
-uv init packages/core --package
+This repository now follows a more template-like Python monorepo structure with a modern developer workflow:
 
-uv add shared-utils --package api-service
+- A React/Vite web shell in [apps/web](apps/web)
+- A FastAPI-backed API service in [services/api_gateway](services/api_gateway)
+- Shared contracts and packages under [libs/shared](libs/shared) and [packages](packages)
+- A streamlined entrypoint, test setup, and pre-commit hooks for everyday development
+
+## Quick start
+
+### Python entrypoint
+
+```bash
+python main.py
+```
+
+### Web app
+
+```bash
+cd apps/web
+npm install
+npm run dev
+```
+
+### API service
+
+```bash
+cd services/api_gateway
+python -m uvicorn app:app --reload --port 8000
+```
+
+### Quality checks
+
+```bash
+python -m pytest
+ruff check .
+ruff format --check .
+```
+
+## Project layout
+
+```text
+apps/            Web application shell
+services/        Service-oriented Python apps
+libs/            Shared libraries
+packages/        Reusable Python packages
+tests/           Repository-level smoke tests
+```
+
+## Development notes
+
+- Use [pre-commit-config.yaml](pre-commit-config.yaml) for formatting and lint hooks.
+- Copy [.env.example](.env.example) to `.env` for local environment values.
+- The root [pyproject.toml](pyproject.toml) is the single place to manage dependencies and tooling.
