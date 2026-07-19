@@ -1,8 +1,20 @@
-# Pre-commit hooks - Basic file checks
-# Install: pre-commit install
-# Run all: pre-commit run --all-files
+# Pre-commit hooks for Python Monorepo
+# Install: uv run pre-commit install
+# Run all: uv run pre-commit run --all-files
+# Update: uv run pre-commit autoupdate
 
 repos:
+  # ─── Code quality (linter + formatter) ───────────────────
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.11
+    hooks:
+      - id: ruff
+        name: ruff lint
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+        name: ruff format
+
+  # ─── General file checks ────────────────────────────────
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -11,6 +23,27 @@ repos:
       - id: check-yaml
       - id: check-toml
       - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=500]
       - id: check-merge-conflict
       - id: detect-private-key
       - id: check-case-conflict
+      - id: check-symlinks
+      - id: destroyed-symlinks
+      - id: mixed-line-ending
+        args: [--fix=lf]
+
+  # ─── Security ───────────────────────────────────────────
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: [--exclude-files, .*\.lock, --exclude-files, .*\.toml, --exclude-files, .*\.yaml]
+        exclude: uv\.lock|pyproject\.toml|.*\.md
+
+  # ─── Commit message format ──────────────────────────────
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.8.2
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
