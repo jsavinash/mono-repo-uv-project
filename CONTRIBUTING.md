@@ -106,27 +106,25 @@ type(scope): description
 
 | Scope | Module |
 |-------|--------|
-| `django-api` | Django REST API app |
-| `flask-api` | Flask REST API app |
-| `frontend` | Streamlit frontend |
 | `shared` | Shared libraries |
-| `core` | Core package |
-| `algorithms` | Algorithms package |
-| `data-structure` | Data structures package |
-| `cli` | CLI tools |
+| `web` | React web app |
+| `config` | Configuration |
+| `deps` | Dependencies |
 | `docs` | Documentation |
 | `build` | Build configuration |
 | `ci` | CI/CD pipeline |
 | `infra` | Docker/K8s infrastructure |
+| `hooks` | Git hooks |
+| `educational` | Educational resources |
 
 ### Examples
 
 ```
-feat(auth): add JWT token refresh endpoint
-fix(cart): resolve NPE on empty cart retrieval
-docs(api): update OpenAPI documentation
-refactor(shared): extract common validation logic
-test(flask-api): add integration tests for user endpoints
+feat(shared): add user DTO with validation
+fix(config): resolve dependency version conflict
+docs(readme): update quick start instructions
+refactor(hooks): improve secret scanning performance
+test(shared): add unit tests for number_utils
 ci: add dependency vulnerability scanning job
 ```
 
@@ -181,21 +179,17 @@ main ─────────────── (production, protected)
 
 ```
 python-starter-kit/
-├── apps/                    # Production applications
-│   ├── django-api/          # Django REST API (port 8000)
-│   ├── flask-api/           # Flask REST API (port 5000)
-│   └── frontend/            # Streamlit frontend (port 8501)
+├── apps/                    # Application projects
+│   ├── django-api/          # Django REST API (planned)
+│   ├── flask-api/           # Flask REST API (planned)
+│   ├── frontend/            # Streamlit frontend (planned)
+│   └── web/                 # React web app (boilerplate)
 ├── libs/                    # Shared libraries
 │   └── shared/              # Common contracts and utilities
-├── packages/                # Reusable Python packages
-│   ├── core/                # Core business logic
-│   ├── algorithms/          # Algorithm implementations
-│   ├── data_structure/      # Data structure implementations
-│   ├── machine-learning/    # ML models & utilities
-│   └── ...                  # Domain packages
-├── tools/                   # CLI tools
-│   └── cli/                 # Boilerplate generators
+├── educational-resources/   # Learning materials
+├── tests/                   # Root-level tests
 ├── docs/                    # MkDocs documentation
+├── config/                  # Centralized dependency catalog
 ├── .githooks/               # Custom git hooks
 ├── .github/workflows/       # CI/CD pipelines
 ├── pyproject.toml           # Root workspace config
@@ -212,16 +206,10 @@ All dependency versions are managed centrally in `config/dependencies.toml` — 
 ### How to Add/Override Dependencies
 
 ```bash
-# Add a new dependency to a specific project
-cd apps/django-api
+# Add a new dependency
 uv add requests
 
-# Override a central version in a specific project
-cd apps/flask-api
-uv add "flask==3.1.0"  # Overrides the central >=3.0.0
-
-# Add a dev dependency to a project
-cd apps/frontend
+# Add a dev dependency
 uv add --dev pytest-mock
 
 # Add a workspace-level dependency group
@@ -318,9 +306,7 @@ def test_api_health_check(client):
 ```
 tests/
 ├── conftest.py              # Shared fixtures
-├── test_main.py             # Root-level tests
-├── test_cli.py              # CLI tests
-└── test_migration_manager.py
+└── test_main.py             # Root-level tests
 ```
 
 ### Coverage Requirements

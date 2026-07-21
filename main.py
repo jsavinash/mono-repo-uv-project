@@ -2,7 +2,7 @@ from __future__ import annotations
 
 
 def build_welcome_message() -> str:
-    return "Hello from python-mono-repo-starter-kit!"
+    return "Hello from python-starter-kit!"
 
 
 def main() -> None:

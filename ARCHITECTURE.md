@@ -11,9 +11,8 @@ This document provides a deep dive into the architecture and design decisions of
 3. [Quality Gates](#quality-gates)
 4. [Dependency Management](#dependency-management)
 5. [CI/CD Pipeline](#cicd-pipeline)
-6. [Performance Optimizations](#performance-optimizations)
-7. [Security](#security)
-8. [Best Practices](#best-practices)
+6. [Security](#security)
+7. [Best Practices](#best-practices)
 
 ## Monorepo Architecture
 
@@ -21,27 +20,17 @@ This document provides a deep dive into the architecture and design decisions of
 
 ```
 python-starter-kit/
-├── Apps (production applications)
-│   ├── django-api/              # Django REST API
-│   ├── flask-api/               # Flask REST API
-│   ├── frontend/                # Streamlit Frontend
-│   └── web/                     # React Web (frontend)
+├── Apps (planned applications)
+│   ├── django-api/              # Django REST API (not yet created)
+│   ├── flask-api/               # Flask REST API (not yet created)
+│   ├── frontend/                # Streamlit Frontend (not yet created)
+│   └── web/                     # React Web (boilerplate - Node.js)
 │
 ├── Shared Libraries
-│   └── libs/shared/             # Common DTOs, models, utilities
+│   └── libs/shared/             # Common DTOs, models, utilities (Pydantic)
 │
-├── Packages (reusable modules)
-│   ├── core/                    # Core business logic
-│   ├── algorithms/              # Algorithm implementations
-│   ├── concepts/                # Programming concepts
-│   ├── competitive-programming/ # CP solutions
-│   ├── data_structure/          # Data structures
-│   ├── machine-learning/        # ML models & utilities
-│   ├── maths/                   # Math utilities
-│   └── programming/             # Programming patterns
-│
-├── Tools
-│   └── cli/                     # CLI tools & boilerplate generators
+├── Educational Resources
+│   └── python-programming/      # Python learning materials
 │
 ├── Root Configuration
 │   ├── pyproject.toml           # uv workspace config
@@ -49,29 +38,27 @@ python-starter-kit/
 │   ├── .pre-commit-config.yaml  # Pre-commit hooks
 │   └── .githooks/               # Custom git hooks
 │
-└── Infrastructure
-    ├── docker-compose.yml       # Service orchestration
-    ├── .github/workflows/       # CI/CD pipelines
-    └── docs/                    # MkDocs documentation
+├── Infrastructure
+│   ├── docker-compose.yml       # Service orchestration (Redis + templates)
+│   ├── .github/workflows/       # CI/CD pipelines
+│   └── docs/                    # MkDocs documentation
+│
+└── Configuration
+    └── config/dependencies.toml # Centralized dependency version catalog
 ```
 
 ### Workspace Strategy
 
-The monorepo uses **uv workspace** to manage multiple Python packages:
+The monorepo uses **uv workspace** to manage Python packages:
 
-#### 1. **Apps Directory**
-- **Purpose**: Production-ready applications
-- **Benefits**:
-  - Independent dependency management per app
-  - Isolated testing
-  - Independent deployment
-- **Structure**:
-  ```
-  apps/
-  ├── django-api/               # Port 8000
-  ├── flask-api/                 # Port 5000
-  └── frontend/                  # Port 8501
-  ```
+#### 1. **Current Workspace Members**
+
+```
+[tool.uv.workspace]
+members = [
+    "libs/shared",
+]
+```
 
 #### 2. **Shared Libraries**
 - **Purpose**: Common code consumed by apps and packages
@@ -79,13 +66,6 @@ The monorepo uses **uv workspace** to manage multiple Python packages:
   - Centralized utility functions
   - Shared contracts/DTOs
   - Reusable across all modules
-
-#### 3. **Packages Directory**
-- **Purpose**: Reusable Python packages for various domains
-- **Benefits**:
-  - Domain-specific organization
-  - Independent versioning
-  - Reusable across projects
 
 ### Why uv Workspace?
 
@@ -109,15 +89,10 @@ make lint          # Ruff lint check
 make format        # Ruff auto-format
 make typecheck     # MyPy type checking
 make test          # Run all tests
-make test-all      # Full suite
-
-# App-specific tasks
-make django-run    # Start Django
-make flask-run     # Start Flask
-make frontend-run  # Start Frontend
+make quality-check # All quality checks combined
 
 # Infrastructure
-make docker-up     # Start all services
+make docker-up     # Start services
 make docker-down   # Stop all services
 
 # CI pipeline
@@ -184,7 +159,7 @@ make ci            # Lint + format + test
 
 ### Centralized Dependency Catalog
 
-All dependencies are managed via a centralized version catalog at `config/dependencies.toml` — the single source of truth for dependency versions across the monorepo (inspired by Gradle's `libs.versions.toml` in the Java Starter Kit):
+All dependencies are managed via a centralized version catalog at `config/dependencies.toml` — the single source of truth for dependency versions across the monorepo:
 
 ```toml
 # config/dependencies.toml
@@ -200,7 +175,7 @@ mypy = ">=1.16.0"
 
 | Group | Purpose | Key Dependencies |
 |-------|---------|------------------|
-| **dev** | Development | poethepoet, pre-commit, commitizen, pip-audit |
+| **dev** | Development | poethepoet, pre-commit, commitizen |
 | **test** | Testing | pytest, pytest-cov, pytest-randomly, pytest-timeout |
 | **lint** | Linting | ruff |
 | **type_check** | Type checking | mypy |
@@ -210,13 +185,10 @@ mypy = ">=1.16.0"
 
 ### UV Workspace Configuration
 
-All sub-projects are managed via `uv workspace`:
-
 ```toml
 [tool.uv.workspace]
 members = [
     "libs/shared",
-    "apps/*",
 ]
 ```
 
@@ -225,13 +197,11 @@ members = [
 Individual projects can override the central catalog versions in their own `pyproject.toml`:
 
 ```bash
-# Override Django version in django-api only
-cd apps/django-api
-uv add "django==5.2.0"
+# Add a new dependency
+uv add requests
 
-# Add a new dependency to a specific project
-cd apps/micro-services/user
-uv add httpx
+# Add a dev dependency
+uv add --dev pytest-mock
 ```
 
 uv's workspace resolution automatically handles version selection — project-local declarations take precedence over the central catalog.
@@ -244,8 +214,6 @@ make dep-list          # List all workspace dependencies
 make dep-outdated      # Show outdated dependencies
 make dep-upgrade-all   # Upgrade all deps and update lockfile
 make dep-verify        # Verify no dependency conflicts
-make dep-add           # Add dep to a project (PROJECT= PKG=)
-make dep-remove        # Remove dep from a project
 make dep-audit         # Audit dependencies for vulnerabilities
 make dep-licenses      # Check dependency licenses
 ```
@@ -259,7 +227,7 @@ Root pyproject.toml (workspace + dependency groups)
     ↓ (uv workspace resolution)
 Shared Libraries (libs/shared/)
     ↓ (install dependency)
-Apps (apps/*)
+Apps (apps/*) — when created
     ↓ (runtime)
 Production
 ```
@@ -285,9 +253,6 @@ jobs:
    - MyPy type check
 
 2. **Test** (Matrix: py3.10, 3.11, 3.12)
-   - Django API tests
-   - Flask API tests
-   - Frontend tests
    - Root tests
    - Upload test results
 
@@ -295,46 +260,17 @@ jobs:
    - pip-audit vulnerability scan
 
 4. **Docker Build** (Depends on lint + test)
-   - Build Django API image
-   - Build Flask API image
-   - Build Frontend image
+   - Build service images
 
 5. **Package Build** (Depends on lint + test)
    - Build all packages
    - Upload build artifacts
-
-## Performance Optimizations
-
-### Build Performance
-
-| Optimization | Impact | Configuration |
-|--------------|--------|---------------|
-| **uv Sync** | ~50% faster | `uv sync --all-workspace` |
-| **Parallel Tests** | ~30% faster | `pytest -x -n auto` |
-| **Incremental Linting** | ~40% faster | Ruff cache |
-| **Dependency Caching** | ~60% faster | uv.lock |
-
-### Memory Configuration
-
-- **uv**: Default configuration
-- **pytest**: Default memory management
-- **Docker**: BuildKit caching
-
-### Test Optimization
-
-```ini
-# pytest.ini
-[pytest]
-addopts = -v --tb=short --strict-markers
-testpaths = tests
-```
 
 ## Security
 
 ### Static Analysis Security
 
 1. **Ruff Security**
-   - Bandit rules (S prefix)
    - Hardcoded passwords
    - SQL injection patterns
    - Insecure crypto
@@ -342,12 +278,12 @@ testpaths = tests
 2. **MyPy Security**
    - Type safety enforcement
    - Unsafe type casts
-   - Null pointer risks
 
 3. **Pre-commit Security**
    - Secret scanning (detect-secrets)
    - Private key detection
    - AWS credential scanning
+   - Custom high-confidence pattern matching (API keys, tokens)
 
 ### Dependency Security
 
@@ -387,9 +323,9 @@ main (protected)
 ### 2. **Commit Convention**
 
 ```
-feat(auth): add OAuth2 login
-fix(cart): resolve NPE
-docs(readme): update setup
+feat(shared): add user DTO
+fix(config): resolve dependency conflict
+docs(readme): update quick start
 ```
 
 ### 3. **Code Review Process**
@@ -452,26 +388,18 @@ uv run pytest tests/test_*.py -k "test_name"
 
 ### Planned Enhancements
 
-1. **Remote Build Cache**
+1. **Application Creation**
+   - Django REST API with JWT auth
+   - Flask REST API with blueprint pattern
+   - Streamlit frontend dashboard
+
+2. **Remote Build Cache**
    - Shared cache across team
    - Faster CI builds
 
-2. **Kubernetes Deployment**
+3. **Kubernetes Deployment**
    - Helm charts
    - Docker Compose for K8s
-
-3. **Observability**
-   - Distributed tracing
-   - Metrics aggregation
-   - Centralized logging
-
-4. **Feature Flags**
-   - Environment-based flags
-   - Gradual rollouts
-
-5. **API Documentation**
-   - OpenAPI 3.0
-   - Swagger UI
 
 ## Conclusion
 
@@ -480,7 +408,6 @@ This architecture provides:
 - ✅ **Scalability**: Easy to add new services
 - ✅ **Maintainability**: Consistent build configuration
 - ✅ **Quality**: Multi-layer quality gates
-- ✅ **Performance**: Optimized build times
 - ✅ **Security**: Vulnerability scanning
 - ✅ **Developer Experience**: Fast feedback loops
 
