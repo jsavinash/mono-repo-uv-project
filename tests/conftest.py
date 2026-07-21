@@ -16,9 +16,7 @@ ROOT = _find_repo_root(Path(__file__).resolve())
 # Add key package paths so root-level tests can import workspace packages
 for path in [
     ROOT,
-    ROOT / "packages/core/src",
     ROOT / "libs/shared/src",
-    ROOT / "tools/cli/src",
 ]:
     if str(path) not in sys.path:
         sys.path.insert(0, str(path))

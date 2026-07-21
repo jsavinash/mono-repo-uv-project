@@ -1,7 +1,7 @@
 [project]
-name = "django_api"
+name = "python-programming"
 version = "0.1.0"
-description = "Django REST API - django-api"
+description = "Educational resources for Python programming"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = []

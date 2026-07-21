@@ -23,9 +23,10 @@ RESET  := $(shell tput -Txterm sgr0)
 BOLD   := $(shell tput -Txterm bold)
 
 help: ## Show this help
-	@printf '\n%s%s%s\n' $(CYAN) 'Usage: make <target>' $(RESET)
-	@printf '%s' '───────────────────────────────────────'
-	@printf '\n'
+	@echo ''
+	@echo "$(CYAN)Usage: make <target>$(RESET)"
+	@echo '───────────────────────────────────────'
+	@echo ''
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "$(GREEN)%-25s$(RESET) %s\n", $$1, $$2}'
 
@@ -95,25 +96,25 @@ django-install: ## Install Django API dependencies
 	cd apps/django-api && uv sync
 
 django-migrate: ## Run Django migrations
-	cd apps/django-api && python manage.py migrate
+	uv run python apps/django-api/manage.py migrate
 
 django-makemigrations: ## Create Django migrations
-	cd apps/django-api && python manage.py makemigrations
+	uv run python apps/django-api/manage.py makemigrations
 
 django-run: ## Run Django development server
-	cd apps/django-api && python manage.py runserver 0.0.0.0:8000
+	uv run python apps/django-api/manage.py runserver 0.0.0.0:8000
 
 django-shell: ## Django shell
-	cd apps/django-api && python manage.py shell
+	uv run python apps/django-api/manage.py shell
 
 django-createsuperuser: ## Create Django superuser
-	cd apps/django-api && python manage.py createsuperuser
+	uv run python apps/django-api/manage.py createsuperuser
 
 django-test: ## Run Django tests
 	cd apps/django-api && uv run pytest -v
 
 django-collectstatic: ## Collect Django static files
-	cd apps/django-api && python manage.py collectstatic --noinput
+	uv run python apps/django-api/manage.py collectstatic --noinput
 
 # ─── Flask API ──────────────────────────────────────────────
 
@@ -121,19 +122,19 @@ flask-install: ## Install Flask API dependencies
 	cd apps/flask-api && uv sync
 
 flask-run: ## Run Flask development server
-	cd apps/flask-api && flask run --host=0.0.0.0 --port=5000 --reload
+	cd apps/flask-api && uv run flask run --host=0.0.0.0 --port=5000 --reload
 
 flask-shell: ## Flask shell
-	cd apps/flask-api && flask shell
+	cd apps/flask-api && uv run flask shell
 
 flask-db-init: ## Initialize Flask database
-	cd apps/flask-api && flask db init
+	cd apps/flask-api && uv run flask db init
 
 flask-db-migrate: ## Create Flask database migration
-	cd apps/flask-api && flask db migrate -m "auto migration"
+	cd apps/flask-api && uv run flask db migrate -m "auto migration"
 
 flask-db-upgrade: ## Apply Flask database migrations
-	cd apps/flask-api && flask db upgrade
+	cd apps/flask-api && uv run flask db upgrade
 
 flask-test: ## Run Flask tests
 	cd apps/flask-api && uv run pytest -v
@@ -144,7 +145,7 @@ frontend-install: ## Install frontend dependencies
 	cd apps/frontend && uv sync
 
 frontend-run: ## Run Streamlit frontend
-	cd apps/frontend && streamlit run src/app.py --server.port=8501
+	cd apps/frontend && uv run streamlit run src/app.py --server.port=8501
 
 frontend-test: ## Run frontend tests
 	cd apps/frontend && uv run pytest -v

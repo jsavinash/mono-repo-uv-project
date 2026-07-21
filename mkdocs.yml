@@ -96,25 +96,9 @@ markdown_extensions:
 # ─── Navigation ─────────────────────────────────────────────────
 nav:
   - Home: index.md
-  - Getting Started:
-    - Installation: getting-started/installation.md
-    - Quick Start: getting-started/quick-start.md
-    - Configuration: getting-started/configuration.md
   - Architecture:
-    - Overview: architecture/overview.md
-    - Django API: architecture/django-api.md
-    - Flask API: architecture/flask-api.md
-    - Frontend: architecture/frontend.md
-    - Shared Libraries: architecture/shared-libraries.md
-  - Development:
-    - Workflow: development/workflow.md
-    - Testing: development/testing.md
-    - Code Quality: development/code-quality.md
-    - Docker: development/docker.md
-  - API Reference:
-    - Django Endpoints: api/django.md
-    - Flask Endpoints: api/flask.md
-  - Contributing: contributing.md
+    - Overview: ARCHITECTURE.md
+  - Contributing: CONTRIBUTING.md
 
 # ─── Copyright ──────────────────────────────────────────────────
 copyright: Copyright &copy; 2024 Avinash Nishad

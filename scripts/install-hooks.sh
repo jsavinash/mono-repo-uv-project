@@ -17,6 +17,7 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 BOLD='\033[1m'
+DIM='\033[2m'
 
 echo -e "\n${CYAN}${BOLD}╔══════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${CYAN}${BOLD}║     🔧 Python Starter Kit - Git Hooks Installer             ║${NC}"
