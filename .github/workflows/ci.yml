@@ -105,12 +105,25 @@ jobs:
       - name: Run root tests
         run: uv run pytest -v --junitxml=test-results/root-junit.xml || true
 
+      - name: Run tests with coverage
+        run: uv run pytest --cov=apps --cov-report=term-missing --cov-report=xml || true
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.python-version }}
-          path: test-results/
+          path: |
+            test-results/
+            coverage.xml
+          retention-days: 7
+
+      - name: Upload coverage to artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-${{ matrix.python-version }}
+          path: htmlcov/
           retention-days: 7
 
   # ─── Security Scan ───────────────────────────────────────
@@ -137,13 +150,38 @@ jobs:
       - name: Check for known vulnerabilities
         run: uv run pip-audit || true
 
+      - name: Check dependency licenses
+        run: uv run pip-licenses-cli --output licenses-report.txt || true
+
+  # ─── Quality Gate ────────────────────────────────────────
+  quality-gate:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [lint, test, security]
+    if: always()
+    steps:
+      - name: Check lint status
+        run: |
+          echo "Lint job: ${{ needs.lint.result }}"
+          echo "Test job: ${{ needs.test.result }}"
+          echo "Security job: ${{ needs.security.result }}"
+          if [ "${{ needs.lint.result }}" = "failure" ] || [ "${{ needs.test.result }}" = "failure" ] || [ "${{ needs.security.result }}" = "failure" ]; then
+            echo "Quality gate FAILED"
+            exit 1
+          fi
+          echo "Quality gate PASSED"
+
   # ─── Docker Build ────────────────────────────────────────
   docker:
     name: Docker Build
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: [lint, test]
+    if: |
+      always() &&
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && inputs.run_docker_build)
+    needs: [quality-gate]
     steps:
       - uses: actions/checkout@v4
 
@@ -182,7 +220,8 @@ jobs:
     name: Build Packages
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [lint, test]
+    needs: [quality-gate]
+    if: always()
     steps:
       - uses: actions/checkout@v4
 

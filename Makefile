@@ -2,18 +2,25 @@
 # Development workflow automation for Django API, Flask API & Streamlit Frontend
 # ─────────────────────────────────────────────────────────────
 
-.PHONY: help install clean lint format typecheck test test-all \
-        django-install django-migrate django-run django-test \
-        flask-install flask-run flask-test \
-        frontend-install frontend-run frontend-test \
-        docker-up docker-down docker-build \
-        setup ci docs
+.PHONY: help install clean deep-clean lint lint-fix format format-check \
+	typecheck test test-cov test-all quality-check quality-fix full-build \
+	django-install django-migrate django-makemigrations django-run \
+	django-shell django-createsuperuser django-test django-collectstatic \
+	flask-install flask-run flask-shell flask-db-init flask-db-migrate \
+	flask-db-upgrade flask-test \
+	frontend-install frontend-run frontend-test \
+	docker-build docker-up docker-up-logs docker-down docker-down-volumes \
+	docker-logs docker-logs-django docker-logs-flask docker-logs-frontend \
+	docker-clean setup dev docs-serve docs-build ci tree \
+	bump-patch bump-minor bump-major hooks-install security-audit
 
 # Colors
 GREEN  := $(shell tput -Txterm setaf 2)
 YELLOW := $(shell tput -Txterm setaf 3)
 CYAN   := $(shell tput -Txterm setaf 6)
+RED    := $(shell tput -Txterm setaf 1)
 RESET  := $(shell tput -Txterm sgr0)
+BOLD   := $(shell tput -Txterm bold)
 
 help: ## Show this help
 	@printf '\n%s%s%s\n' $(CYAN) 'Usage: make <target>' $(RESET)
@@ -33,6 +40,20 @@ clean: ## Clean build artifacts
 	rm -rf .pytest_cache .ruff_cache .mypy_cache
 	rm -rf build dist *.egg-info
 
+deep-clean: clean ## Deep clean all build and cache artifacts
+	rm -rf .venv .nox
+	rm -rf node_modules apps/web/node_modules apps/web/dist
+	rm -rf htmlcov coverage.xml .coverage
+	rm -rf test-results/
+	rm -rf site/
+	rm -rf *.log
+	@echo "$(GREEN)✓$(RESET) Deep clean complete"
+
+# ─── Hooks ─────────────────────────────────────────────────────
+
+hooks-install: ## Install custom git hooks
+	bash scripts/install-hooks.sh
+
 # ─── Code Quality ──────────────────────────────────────────────
 
 lint: ## Lint all Python files with Ruff
@@ -50,6 +71,10 @@ format-check: ## Check formatting without changes
 typecheck: ## Type check with mypy
 	uv run mypy .
 
+quality-check: lint format-check typecheck ## Run all quality checks
+
+quality-fix: lint-fix format ## Auto-fix all quality issues
+
 # ─── Testing ──────────────────────────────────────────────────
 
 test: ## Run all tests
@@ -58,7 +83,11 @@ test: ## Run all tests
 test-cov: ## Run tests with coverage
 	uv run pytest --cov=apps --cov-report=term-missing --cov-report=html
 
-test-all: test-cov lint format-check typecheck ## Run full test suite
+test-all: test-cov quality-check ## Run full test suite with all quality checks
+
+# ─── Build ─────────────────────────────────────────────────────
+
+full-build: install test-all ## Full build pipeline (install + test + quality)
 
 # ─── Django API ────────────────────────────────────────────────
 
@@ -123,38 +152,43 @@ frontend-test: ## Run frontend tests
 # ─── Docker ────────────────────────────────────────────────────
 
 docker-build: ## Build all Docker images
-	docker-compose build
+	docker compose build
 
 docker-up: ## Start all services
-	docker-compose up -d
+	docker compose up -d
 
 docker-up-logs: ## Start all services with logs
-	docker-compose up
+	docker compose up
 
 docker-down: ## Stop all services
-	docker-compose down
+	docker compose down
 
 docker-down-volumes: ## Stop services and remove volumes
-	docker-compose down -v
+	docker compose down -v
 
 docker-logs: ## View all service logs
-	docker-compose logs -f
+	docker compose logs -f
 
 docker-logs-django: ## View Django API logs
-	docker-compose logs -f django-api
+	docker compose logs -f django-api
 
 docker-logs-flask: ## View Flask API logs
-	docker-compose logs -f flask-api
+	docker compose logs -f flask-api
 
 docker-logs-frontend: ## View Frontend logs
-	docker-compose logs -f frontend
+	docker compose logs -f frontend
 
 docker-clean: ## Remove all containers, networks, volumes
-	docker-compose down -v --rmi all --remove-orphans
+	docker compose down -v --rmi all --remove-orphans
+
+# ─── Security ──────────────────────────────────────────────────
+
+security-audit: ## Run security vulnerability audit
+	uv run pip-audit
 
 # ─── Development ──────────────────────────────────────────────
 
-setup: install django-migrate flask-db-upgrade ## Full project setup
+setup: install hooks-install django-migrate flask-db-upgrade ## Full project setup
 
 dev: ## Run all services locally (requires 3 terminals)
 	@echo "$(YELLOW)Run these in separate terminals:$(RESET)"
@@ -172,7 +206,7 @@ docs-build: ## Build MkDocs documentation
 
 # ─── CI ──────────────────────────────────────────────────────
 
-ci: lint format-check test ## CI pipeline (lint + test)
+ci: quality-check test ## CI pipeline (quality + test)
 
 # ─── Utilities ──────────────────────────────────────────────
 
