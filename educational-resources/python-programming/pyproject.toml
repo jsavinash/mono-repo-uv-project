@@ -1,0 +1,10 @@
+[project]
+name = "django_api"
+version = "0.1.0"
+description = "Django REST API - django-api"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = []

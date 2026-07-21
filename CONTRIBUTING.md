@@ -203,6 +203,51 @@ python-starter-kit/
 └── docker-compose.yml       # Service orchestration
 ```
 
+## Dependency Management
+
+### Centralized Version Catalog
+
+All dependency versions are managed centrally in `config/dependencies.toml` — the single source of truth. This file catalogs every dependency used across the monorepo, organized by ecosystem (Django, Flask, FastAPI, testing, linting, etc.).
+
+### How to Add/Override Dependencies
+
+```bash
+# Add a new dependency to a specific project
+cd apps/django-api
+uv add requests
+
+# Override a central version in a specific project
+cd apps/flask-api
+uv add "flask==3.1.0"  # Overrides the central >=3.0.0
+
+# Add a dev dependency to a project
+cd apps/frontend
+uv add --dev pytest-mock
+
+# Add a workspace-level dependency group
+uv add --group test pytest-xdist
+
+# View all dependencies
+make dep-list
+
+# Check for outdated dependencies
+make dep-outdated
+
+# Audit for vulnerabilities
+make dep-audit
+```
+
+### Dependency Groups
+
+| Group | Purpose | Install Command |
+|-------|---------|-----------------|
+| `test` | Testing | `uv sync --group test` |
+| `lint` | Linting | `uv sync --group lint` |
+| `type_check` | Type checking | `uv sync --group type_check` |
+| `docs` | Documentation | `uv sync --group docs` |
+| `dev` | Development | `uv sync --group dev` |
+| `security` | Security audit | `uv sync --group security` |
+
 ## Environment Setup
 
 ### Required Tools
