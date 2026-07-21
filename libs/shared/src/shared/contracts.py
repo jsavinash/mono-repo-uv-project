@@ -1,7 +1,7 @@
 """Shared DTOs and contracts using Pydantic for cross-service data validation."""
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any
 
@@ -94,7 +94,7 @@ class HealthCheckResponse(BaseModel):
     status: str = "healthy"
     service: str
     version: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 @dataclass(frozen=True)

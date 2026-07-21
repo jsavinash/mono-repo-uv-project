@@ -1,5 +1,5 @@
 [project]
-name = "python-mono-repo-starter-kit"
+name = "python-starter-kit"
 version = "0.1.0"
 description = "A uv-based monorepo starter with Django API, Flask API, Streamlit frontend, and Python packages"
 readme = "README.md"
@@ -10,10 +10,7 @@ dependencies = [
     "python-dotenv>=1.2.1",
     "click>=8.3.1",
     "sqlalchemy>=2.0.46",
-    "setuptools>=80.10.2",
-    "core",
     "shared",
-    "packages",
 ]
 
 [project.optional-dependencies]
@@ -32,26 +29,6 @@ dev = [
 executor.type = "uv"
 
 [tool.poe.tasks]
-# Django API
-django-migrate = "cd apps/django-api && python manage.py migrate"
-django-runserver = "cd apps/django-api && python manage.py runserver"
-django-test = "cd apps/django-api && pytest"
-
-# Flask API
-flask-run = "cd apps/flask-api && flask run"
-flask-test = "cd apps/flask-api && pytest"
-
-# Frontend
-frontend-run = "cd apps/frontend && streamlit run src/app.py"
-frontend-test = "cd apps/frontend && pytest"
-
-# Boilerplate Generator
-boilerplate-list = "python -m tools.cli.src.cli.boilerplate_generator list-templates"
-
-[project.scripts]
-cli = "cli:app"
-migrations = "migrations:main"
-boilerplate = "boilerplate_generator:app"
 
 [build-system]
 requires = ["hatchling>=1.26"]
@@ -59,19 +36,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = [
-    "apps/django-api",
-    "apps/flask-api",
-    "apps/frontend",
     "libs/shared",
-    "packages/core",
-    "tools/cli",
-    "packages/maths",
-    "packages/machine-learning",
-    "packages/algorithms",
-    "packages/concepts",
-    "packages/programming",
-    "packages/competitive-programming",
-    "packages/data_structure",
 ]
 
 [dependency-groups]
@@ -104,34 +69,31 @@ dev = [
     "poethepoet>=0.40.0",
     "pre-commit>=4.6.0",
     "commitizen>=4.8.2",
-    "pip-audit>=2.7.0",
 ]
 security = ["pip-audit>=2.7.0"]
 
 [tool.setuptools.packages.find]
-where = ["services", "packages", "libs", "tools", "apps"]
+where = ["libs"]
 
 [tool.uv.sources]
-core = { workspace = true }
 shared = { workspace = true, editable = true }
-tools = { workspace = true }
 
 [tool.uv.workspace]
 members = [
     "libs/shared",
-    "apps/*",
 ]
 
 [tool.mypy]
 ignore_missing_imports = true
 strict = true
 enable_error_code = ["deprecated", "exhaustive-match", "explicit-override"]
+exclude = ["noxfile\\.py$"]
 
 [tool.ruff]
 line-length = 88
 target-version = "py310"
 indent-width = 4
-src = ["apps", "services", "packages", "libs", "tools"]
+src = ["libs", "tests"]
 exclude = [
     ".bzr", ".direnv", ".eggs", ".git", ".git-rewrite", ".hg",
     ".ipynb_checkpoints", ".mypy_cache", ".nox", ".pants.d", ".pyenv",
@@ -145,9 +107,8 @@ select = [
     "F", "E", "I", "N", "UP", "RUF", "B", "C4", "ISC", "PIE",
     "PT", "PTH", "SIM", "TID",
 ]
-ignore = []
+ignore = ["B008", "RUF005", "RUF012"]
 fixable = ["ALL"]
-extend-ignore = ["RUF005", "RUF012"]
 unfixable = ["F401"]
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 

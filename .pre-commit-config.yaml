@@ -21,7 +21,6 @@ repos:
       - id: mypy
         name: mypy type check
         args: [--ignore-missing-imports, --strict]
-        additional_dependencies: [types-all]
         stages: [manual]
 
   # ─── File & content checks ────────────────────────────
