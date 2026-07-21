@@ -1,5 +1,6 @@
 """
 API client for communicating with backend services.
+Uses connection pooling via httpx.Client for optimal performance.
 """
 
 from typing import Any
@@ -11,11 +12,15 @@ from src.config import settings
 
 
 class APIClient:
-    """HTTP client for backend API communication."""
+    """HTTP client for backend API communication with connection pooling."""
 
     def __init__(self, base_url: str | None = None, token: str | None = None):
         self.base_url = (base_url or settings.api_base_url).rstrip("/")
         self.token = token or settings.auth_token
+        self._client = httpx.Client(
+            timeout=settings.api_timeout,
+            headers=self._get_headers(),
+        )
 
     def _get_headers(self) -> dict[str, str]:
         headers = {
@@ -25,6 +30,11 @@ class APIClient:
         if self.token:
             headers["Authorization"] = f"Bearer {self.token}"
         return headers
+
+    def _update_token(self, token: str) -> None:
+        """Update the auth token for subsequent requests."""
+        self.token = token
+        self._client.headers.update(self._get_headers())
 
     def _handle_response(self, response: httpx.Response) -> dict[str, Any]:
         try:
@@ -44,13 +54,11 @@ class APIClient:
     ) -> dict[str, Any]:
         """Send GET request."""
         try:
-            with httpx.Client(timeout=settings.api_timeout) as client:
-                response = client.get(
-                    f"{self.base_url}{endpoint}",
-                    headers=self._get_headers(),
-                    params=params,
-                )
-                return self._handle_response(response)
+            response = self._client.get(
+                f"{self.base_url}{endpoint}",
+                params=params,
+            )
+            return self._handle_response(response)
         except httpx.RequestError as e:
             st.error(f"Connection error: {e}")
             return {"success": False, "error": str(e)}
@@ -58,13 +66,11 @@ class APIClient:
     def post(self, endpoint: str, data: dict[str, Any] | None = None) -> dict[str, Any]:
         """Send POST request."""
         try:
-            with httpx.Client(timeout=settings.api_timeout) as client:
-                response = client.post(
-                    f"{self.base_url}{endpoint}",
-                    headers=self._get_headers(),
-                    json=data,
-                )
-                return self._handle_response(response)
+            response = self._client.post(
+                f"{self.base_url}{endpoint}",
+                json=data,
+            )
+            return self._handle_response(response)
         except httpx.RequestError as e:
             st.error(f"Connection error: {e}")
             return {"success": False, "error": str(e)}
@@ -72,13 +78,11 @@ class APIClient:
     def put(self, endpoint: str, data: dict[str, Any] | None = None) -> dict[str, Any]:
         """Send PUT request."""
         try:
-            with httpx.Client(timeout=settings.api_timeout) as client:
-                response = client.put(
-                    f"{self.base_url}{endpoint}",
-                    headers=self._get_headers(),
-                    json=data,
-                )
-                return self._handle_response(response)
+            response = self._client.put(
+                f"{self.base_url}{endpoint}",
+                json=data,
+            )
+            return self._handle_response(response)
         except httpx.RequestError as e:
             st.error(f"Connection error: {e}")
             return {"success": False, "error": str(e)}
@@ -88,13 +92,11 @@ class APIClient:
     ) -> dict[str, Any]:
         """Send PATCH request."""
         try:
-            with httpx.Client(timeout=settings.api_timeout) as client:
-                response = client.patch(
-                    f"{self.base_url}{endpoint}",
-                    headers=self._get_headers(),
-                    json=data,
-                )
-                return self._handle_response(response)
+            response = self._client.patch(
+                f"{self.base_url}{endpoint}",
+                json=data,
+            )
+            return self._handle_response(response)
         except httpx.RequestError as e:
             st.error(f"Connection error: {e}")
             return {"success": False, "error": str(e)}
@@ -102,12 +104,10 @@ class APIClient:
     def delete(self, endpoint: str) -> dict[str, Any]:
         """Send DELETE request."""
         try:
-            with httpx.Client(timeout=settings.api_timeout) as client:
-                response = client.delete(
-                    f"{self.base_url}{endpoint}",
-                    headers=self._get_headers(),
-                )
-                return self._handle_response(response)
+            response = self._client.delete(
+                f"{self.base_url}{endpoint}",
+            )
+            return self._handle_response(response)
         except httpx.RequestError as e:
             st.error(f"Connection error: {e}")
             return {"success": False, "error": str(e)}

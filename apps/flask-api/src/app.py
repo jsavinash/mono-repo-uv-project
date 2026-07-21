@@ -3,6 +3,7 @@ Flask application factory for flask-api.
 """
 
 import logging
+import logging.handlers  # needed for RotatingFileHandler
 import os
 from pathlib import Path
 

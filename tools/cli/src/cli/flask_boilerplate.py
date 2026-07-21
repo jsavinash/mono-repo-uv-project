@@ -87,7 +87,7 @@ def create_flask_app_folder_structure(targetFolderPath):
         if (not os.path.exists(f"{targetFolderPath}{file_path}")) or (
             os.path.getsize(f"{targetFolderPath}{file_path}") == 0
         ):
-            with open(f"{targetFolderPath}{file_path}", "w+") as f:
+            with open(f"{targetFolderPath}{file_path}", "w+"):
                 print(f"Creating an empty file: {file_path}")
         else:
             print(f"File already exists {file_path}")

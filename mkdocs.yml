@@ -1,96 +1,120 @@
-# Set strict to true to turn warnings into errors to catch warnings within CI.
-strict: true
-validation:
-  omitted_files: warn
-  absolute_links: warn
-  unrecognized_links: warn
-  anchors: warn
+# MkDocs configuration for Python Monorepo Starter Kit
+site_name: Python Monorepo Starter Kit
+site_description: "A production-grade Python monorepo featuring Django REST API, Flask REST API, and Streamlit Frontend"
+site_author: Avinash Nishad
+site_url: https://jsavinash.github.io/python-starter-kit
+repo_name: python-starter-kit
+repo_url: https://github.com/jsavinash/python-starter-kit
+edit_uri: edit/main/docs/
+
+# ─── Theme ──────────────────────────────────────────────────────
 theme:
   name: material
-  # By default, fonts are pulled from Google on the Internet. To support offline usage, this is
-  # disabled.
-  font: false
+  language: en
   palette:
-    scheme: slate
-    primary: green
-    accent: yellow
-  icon:
-    logo: material/math-integral-box
-    # GitHub specific.
-    repo: fontawesome/brands/github
-  favicon: static/math-integral-box.png
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
-    - content.code.annotate
-    - content.code.copy
-    - content.code.select
-    - content.footnote.tooltips
-    - content.tabs.link
-    - content.tooltips
-    - navigation.indexes
-    - navigation.expand
-    - navigation.footer
-    - navigation.path
     - navigation.instant
-    - navigation.top
+    - navigation.instant.prefetch
     - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - toc.integrate
+    - search.suggest
     - search.highlight
     - search.share
-    - search.suggest
-    - toc.follow
-markdown_extensions:
-  - abbr
-  - admonition
-  - footnotes
-  - pymdownx.details
-  - pymdownx.keys
-  - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tabbed:
-      alternate_style: true
-      slugify: !!python/object/apply:pymdownx.slugs.slugify
-        kwds:
-          case: lower
-  - md_in_html
-extra_css:
-  - static/stylesheets/extra.css
-extra:
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/johnthagen/python-blueprint
+    - content.tabs.link
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    logo: material/math-integral-box
+
+# ─── Plugins ────────────────────────────────────────────────────
 plugins:
   - search
-  - offline:
-      enabled: !ENV [MKDOCS_MATERIAL_OFFLINE, false]
   - mkdocstrings:
       handlers:
         python:
+          import:
+            - https://docs.python.org/3/objects.inv
           options:
-            show_if_no_docstring: true
-            show_signature_annotations: true
-  # Autodoc configuration.
-  # https://github.com/tlambert03/mkdocs-api-autonav#configuration
-  - api-autonav:
-      modules: ["src/fact"]
-  # This plugin is used to validate URLs (including anchors).
-  - htmlproofer:
-      # This is not enabled by default because this requires network I/O, so it is inherently not
-      # exactly reproducible. For larger projects, this can also slow local build times.
-      validate_external_urls: !ENV [HTMLPROOFER_VALIDATE_EXTERNAL_URLS, false]
-      raise_error: True
-watch:
-  # Watch src/ directory to reload on changes to docstrings for mkdocstrings plugin.
-  - src
-site_name: fact
-copyright: Copyright &copy; 2018-2026 John Hagen
-# GitHub Specific Configuration.
-repo_name: python-blueprint
-repo_url: https://github.com/johnthagen/python-blueprint
-edit_uri: edit/main/docs/user_guide/docs/
+            show_source: true
+            show_root_heading: true
+            show_category_heading: true
+            docstring_style: google
+  - git-revision-date-localized:
+      enable_creation_date: true
+  - minify:
+      minify_html: true
+
+# ─── Extras ─────────────────────────────────────────────────────
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/jsavinash
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/
+  generator: false
+
+# ─── Extensions ─────────────────────────────────────────────────
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.keys
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
+  - toc:
+      permalink: true
+
+# ─── Navigation ─────────────────────────────────────────────────
 nav:
-  - index.md
-  - Third Party Licenses:
-    - licenses/license_report.md
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quick-start.md
+    - Configuration: getting-started/configuration.md
+  - Architecture:
+    - Overview: architecture/overview.md
+    - Django API: architecture/django-api.md
+    - Flask API: architecture/flask-api.md
+    - Frontend: architecture/frontend.md
+    - Shared Libraries: architecture/shared-libraries.md
+  - Development:
+    - Workflow: development/workflow.md
+    - Testing: development/testing.md
+    - Code Quality: development/code-quality.md
+    - Docker: development/docker.md
+  - API Reference:
+    - Django Endpoints: api/django.md
+    - Flask Endpoints: api/flask.md
+  - Contributing: contributing.md
+
+# ─── Copyright ──────────────────────────────────────────────────
+copyright: Copyright &copy; 2024 Avinash Nishad

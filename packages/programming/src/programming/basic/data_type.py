@@ -72,7 +72,7 @@ class DataType(IDataType):
             print("Is alphabet string :: ", "Hello".isalpha())
             print("String format :: ")
             txt1 = "My name is {fname}, I'm {age}".format(fname="John", age=36)
-            txt2 = "My name is {0}, I'm {1}".format("John", 36)
+            txt2 = "My name is {}, I'm {}".format("John", 36)
             txt3 = "My name is {}, I'm {}".format("John", 36)
             print(txt1)
             print(txt2)
@@ -371,7 +371,7 @@ class DataType(IDataType):
         print(len(thisdict))
         print(type(thisdict))
         # The dict() Constructor
-        print(dict(name="Avinash"))
+        print({"name": "Avinash"})
 
         def access_dict() -> None:
             print(" ********************* Access Dict *********************")

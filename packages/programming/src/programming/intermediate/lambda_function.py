@@ -1,4 +1,6 @@
 from collections.abc import Callable
 
-add: Callable[[int], int] = lambda x: (x + 1)
+
+def add(x: int) -> int:
+    return (x + 1)
 add(1)

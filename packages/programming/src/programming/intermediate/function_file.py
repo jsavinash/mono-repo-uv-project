@@ -6,7 +6,8 @@ def add(a: int, b: int) -> int:
     return a + b
 
 
-x: Callable[[int, int], int] = lambda a, b: a + b
+def x(a: int, b: int) -> int:
+    return a + b
 
 
 def add_positional_only(a: int, /) -> int:
