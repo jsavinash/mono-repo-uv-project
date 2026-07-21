@@ -49,9 +49,9 @@ frontend-test = "cd apps/frontend && pytest"
 boilerplate-list = "python -m tools.cli.src.cli.boilerplate_generator list-templates"
 
 [project.scripts]
-cli = "cli.src.cli.flask_boilerplate:app"
-migrations = "cli.src.cli.migrations:main"
-boilerplate = "tools.cli.src.cli.boilerplate_generator:app"
+cli = "cli:app"
+migrations = "migrations:main"
+boilerplate = "boilerplate_generator:app"
 
 [build-system]
 requires = ["hatchling>=1.26"]

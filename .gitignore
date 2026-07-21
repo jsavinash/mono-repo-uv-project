@@ -108,7 +108,7 @@ docker-compose.override.yml
 
 # ─── Documentation ─────────────────────────────────────────
 site/
-mkdocs.yml
+# mkdocs.yml is tracked in version control
 
 # ─── Jupyter Notebooks ────────────────────────────────────
 .ipynb_checkpoints/

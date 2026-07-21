@@ -1,7 +1,20 @@
 # For information about this file, see: https://editorconfig.org/
 root = true
 
-# For ease of fitting multiple editor panes side by side consistently, set all files types to use
-# the same relaxed max line length permitted in PEP 8.
 [*]
-max_line_length = 99
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 88
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[Makefile]
+indent_style = tab

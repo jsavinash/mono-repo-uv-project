@@ -410,6 +410,16 @@ wheels = [
 name = "cli"
 version = "0.1.0"
 source = { virtual = "tools/cli" }
+dependencies = [
+    { name = "rich" },
+    { name = "typer-slim", extra = ["standard"] },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "rich" },
+    { name = "typer-slim", extras = ["standard"] },
+]
 
 [[package]]
 name = "click"
@@ -3317,6 +3327,12 @@ wheels = [
 name = "shared"
 version = "0.1.0"
 source = { editable = "libs/shared" }
+dependencies = [
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pydantic", specifier = ">=2.6.0" }]
 
 [[package]]
 name = "shellingham"
