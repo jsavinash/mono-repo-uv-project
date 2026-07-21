@@ -102,20 +102,8 @@ tools = { workspace = true }
 
 [tool.uv.workspace]
 members = [
-    "apps/django-api",
-    "apps/flask-api",
-    "apps/frontend",
     "libs/shared",
-    "packages/core",
-    "tools/cli",
-    "packages/data_structure",
-    "packages/algorithms",
-    "packages/concepts",
-    "packages/programming",
-    "packages/competitive-programming",
-    "packages/maths",
-    "packages/machine-learning",
-    "services/*",
+    "apps/*",
 ]
 
 [tool.mypy]
