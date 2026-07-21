@@ -11,7 +11,34 @@ Deep research and comprehensive improvements to the existing Python Starter Kit 
 
 ## ✅ Implemented Improvements
 
-### 1. Custom Git Hooks (.githooks/)
+### 1. Centralized Dependency Management
+
+#### New File Created:
+- `config/dependencies.toml` — Centralized dependency version catalog
+
+#### Features:
+- ✅ Single source of truth for all dependency versions across the monorepo
+- ✅ Organized by ecosystem (Django, Flask, FastAPI, Streamlit, testing, linting, etc.)
+- ✅ Documented dependency groups for `uv sync --group <name>`
+- ✅ Projects can override versions in their own `pyproject.toml`
+- ✅ Makefile commands for dependency management (`make dep-add`, `make dep-list`, etc.)
+- ✅ Inspired by Gradle's `libs.versions.toml` in the Java Starter Kit
+
+#### Makefile Commands
+
+| Command | Purpose |
+|---------|---------|
+| `make dep-catalog` | Show the centralized dependency catalog |
+| `make dep-list` | List all workspace dependencies |
+| `make dep-outdated` | Show outdated dependencies |
+| `make dep-upgrade-all` | Upgrade all deps and update lockfile |
+| `make dep-verify` | Verify no dependency conflicts |
+| `make dep-add PROJECT= PKG=` | Add a dependency to a project |
+| `make dep-remove PROJECT= PKG=` | Remove a dependency from a project |
+| `make dep-audit` | Audit dependencies for vulnerabilities |
+| `make dep-licenses` | Check dependency licenses |
+
+### 2. Custom Git Hooks (.githooks/)
 
 #### New Files Created:
 - `.githooks/pre-commit` - 9 comprehensive checks before commit
@@ -32,7 +59,7 @@ Deep research and comprehensive improvements to the existing Python Starter Kit 
 - ✅ Parallel execution support for multi-check runs
 - ✅ Caching for faster repeated checks
 
-### 2. Documentation
+### 3. Documentation
 
 #### New Files:
 - `ARCHITECTURE.md` - Deep architecture documentation
@@ -41,6 +68,7 @@ Deep research and comprehensive improvements to the existing Python Starter Kit 
 
 #### Content:
 - ✅ Architecture overview and design decisions
+- ✅ Centralized dependency management documentation
 - ✅ Workspace strategy explanation
 - ✅ Quality gates description
 - ✅ CI/CD pipeline documentation
@@ -53,7 +81,7 @@ Deep research and comprehensive improvements to the existing Python Starter Kit 
 - ✅ Commit convention guidelines
 - ✅ Pull request process
 
-### 3. CI/CD Pipeline Enhancement
+### 4. CI/CD Pipeline Enhancement
 
 #### Enhanced File:
 - `.github/workflows/ci.yml` - Enhanced with quality gate and parallel jobs
@@ -67,7 +95,7 @@ Deep research and comprehensive improvements to the existing Python Starter Kit 
 - ✅ Concurrency control (cancel in-progress runs)
 - ✅ Enhanced test reporting
 
-### 4. Build System Enhancement
+### 5. Build System Enhancement
 
 #### Enhanced File:
 - `Makefile` - Added quality gate, deep clean, and orchestration tasks

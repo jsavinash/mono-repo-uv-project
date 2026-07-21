@@ -182,38 +182,81 @@ make ci            # Lint + format + test
 
 ## Dependency Management
 
+### Centralized Dependency Catalog
+
+All dependencies are managed via a centralized version catalog at `config/dependencies.toml` — the single source of truth for dependency versions across the monorepo (inspired by Gradle's `libs.versions.toml` in the Java Starter Kit):
+
+```toml
+# config/dependencies.toml
+[versions]
+django = ">=5.0,<6.0"
+flask = ">=3.0.0"
+pydantic = ">=2.6.0"
+ruff = ">=0.11.0"
+mypy = ">=1.16.0"
+```
+
+### Dependency Groups (Root pyproject.toml)
+
+| Group | Purpose | Key Dependencies |
+|-------|---------|------------------|
+| **dev** | Development | poethepoet, pre-commit, commitizen, pip-audit |
+| **test** | Testing | pytest, pytest-cov, pytest-randomly, pytest-timeout |
+| **lint** | Linting | ruff |
+| **type_check** | Type checking | mypy |
+| **security** | Security audit | pip-audit |
+| **docs** | Documentation | mkdocs-material, mkdocstrings |
+| **licenses** | License compliance | pip-licenses-cli |
+
 ### UV Workspace Configuration
 
-All dependencies are managed centrally via `uv workspace`:
+All sub-projects are managed via `uv workspace`:
 
 ```toml
 [tool.uv.workspace]
 members = [
-    "apps/django-api",
-    "apps/flask-api",
-    "apps/frontend",
     "libs/shared",
-    "packages/*",
-    "tools/*",
+    "apps/*",
 ]
 ```
 
-### Dependency Groups
+### How to Override Dependencies
 
-| Group | Purpose | Key Dependencies |
-|-------|---------|------------------|
-| **dev** | Development | poethepoet, pre-commit |
-| **test** | Testing | pytest, pytest-cov |
-| **lint** | Linting | ruff |
-| **type_check** | Type checking | mypy |
-| **docs** | Documentation | mkdocs-material |
-| **licenses** | License compliance | pip-licenses-cli |
+Individual projects can override the central catalog versions in their own `pyproject.toml`:
+
+```bash
+# Override Django version in django-api only
+cd apps/django-api
+uv add "django==5.2.0"
+
+# Add a new dependency to a specific project
+cd apps/micro-services/user
+uv add httpx
+```
+
+uv's workspace resolution automatically handles version selection — project-local declarations take precedence over the central catalog.
+
+### Makefile Commands
+
+```bash
+make dep-catalog       # Show the centralized dependency catalog
+make dep-list          # List all workspace dependencies
+make dep-outdated      # Show outdated dependencies
+make dep-upgrade-all   # Upgrade all deps and update lockfile
+make dep-verify        # Verify no dependency conflicts
+make dep-add           # Add dep to a project (PROJECT= PKG=)
+make dep-remove        # Remove dep from a project
+make dep-audit         # Audit dependencies for vulnerabilities
+make dep-licenses      # Check dependency licenses
+```
 
 ### Dependency Flow
 
 ```
-Root pyproject.toml (workspace)
-    ↓ (workspace reference)
+config/dependencies.toml (version catalog)
+    ↓ (documented versions)
+Root pyproject.toml (workspace + dependency groups)
+    ↓ (uv workspace resolution)
 Shared Libraries (libs/shared/)
     ↓ (install dependency)
 Apps (apps/*)

@@ -1,16 +1,15 @@
 from typer import Typer
 
-from core.print import printAnything
-from shared.numberUtils import addTwoNumbers
+from shared.contracts import ProductPlan
 
 app = Typer(add_completion=False)
 
 
 @app.command()
-def app():
+def run():
+    """Run the api gateway CLI."""
     print("Hello from api gateway!")
-    printAnything()
-    addTwoNumbers(1, 2)
+    print(f"Plans available: {ProductPlan(name='Starter', price_monthly=19, description='Test')}")
 
 
 if __name__ == "__main__":  # pragma: no cover

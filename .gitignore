@@ -147,9 +147,6 @@ logs/
 /packages/core/__init__.py
 
 # ─── Old/Deprecated Project Structures ────────────────────
-# Old microservices structure (replaced by apps/)
-/apps/micro-services/
-
 # Old monolithic app
 /apps/monolithic/
 
