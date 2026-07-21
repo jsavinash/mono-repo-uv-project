@@ -181,6 +181,35 @@ docker-logs-frontend: ## View Frontend logs
 docker-clean: ## Remove all containers, networks, volumes
 	docker compose down -v --rmi all --remove-orphans
 
+# ─── Dependency Management ─────────────────────────────────────
+
+dep-catalog: ## Show the centralized dependency catalog
+	@cat config/dependencies.toml
+
+dep-list: ## List all workspace dependencies
+	uv tree
+
+dep-outdated: ## Show outdated dependencies
+	uv tree --outdated
+
+dep-upgrade-all: ## Upgrade all dependencies and update lockfile
+	uv sync --all-workspace --upgrade
+
+dep-verify: ## Verify no dependency conflicts
+	uv lock --check
+
+dep-add: ## Add a dependency to a specific project. Usage: make dep-add PROJECT=apps/django-api PKG=requests
+	cd $(PROJECT) && uv add $(PKG)
+
+dep-remove: ## Remove a dependency from a specific project. Usage: make dep-remove PROJECT=apps/django-api PKG=requests
+	cd $(PROJECT) && uv remove $(PKG)
+
+dep-audit: ## Audit dependencies for vulnerabilities
+	uv run pip-audit
+
+dep-licenses: ## Check dependency licenses
+	uv run pip-licenses-cli
+
 # ─── Security ──────────────────────────────────────────────────
 
 security-audit: ## Run security vulnerability audit

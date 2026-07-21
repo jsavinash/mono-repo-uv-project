@@ -174,6 +174,49 @@ make docker-up
 | **Theme** | Customizable via .streamlit/config.toml |
 | **Components** | Reusable sidebar, cards, badges |
 
+## 📦 Dependency Management
+
+### Centralized Version Catalog
+
+All dependency versions are managed centrally in `config/dependencies.toml` — the single source of truth for the entire monorepo. This file catalogs every dependency organized by ecosystem (Django, Flask, FastAPI, testing, linting, etc.).
+
+### How to Manage Dependencies
+
+```bash
+# View the dependency catalog
+make dep-catalog
+
+# List all workspace dependencies
+make dep-list
+
+# Check for outdated dependencies
+make dep-outdated
+
+# Add a dependency to a specific project
+make dep-add PROJECT=apps/django-api PKG=requests
+
+# Remove a dependency from a project
+make dep-remove PROJECT=apps/django-api PKG=requests
+
+# Upgrade all dependencies
+make dep-upgrade-all
+
+# Audit for vulnerabilities
+make dep-audit
+
+# Check dependency licenses
+make dep-licenses
+```
+
+### Override Central Versions
+
+Individual projects can override the central catalog by specifying a different version in their own `pyproject.toml`:
+
+```bash
+cd apps/django-api
+uv add "django==5.2.0"  # Overrides the central >=5.0,<6.0
+```
+
 ## 🛠️ Development Workflow
 
 ### Code Quality
